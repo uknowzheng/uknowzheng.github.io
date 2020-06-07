@@ -1,0 +1,33 @@
+.page {
+    text-align: right;
+
+    a+a {
+        margin-left: 10px
+    }
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+
+    article {
+        padding: 0 10px;
+    }
+    aside {
+        padding: 0 10px;
+    }
+
+}
+
+.bio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+    p h3 {
+        margin: 0;
+
+    }
+}
