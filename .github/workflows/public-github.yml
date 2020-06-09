@@ -2,7 +2,7 @@ name: Publish github
 on: 
   push:
     branches:    
-      - master
+      - blog
 
 jobs:
   build-and-deploy:
