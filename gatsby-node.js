@@ -1,12 +1,13 @@
-const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const path = require (`path`);
+const {createFilePath} = require (`gatsby-source-filesystem`);
 
-exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+exports.createPages = async ({graphql, actions}) => {
+  const {createPage} = actions;
 
-  const blogPost = path.resolve(`./src/templates/blog-post.js`)
-  const blogIndex = path.resolve(`./src/templates/blog-index.js`)
-  const result = await graphql(
+  const blogPost = path.resolve (`./src/templates/blog-post.js`);
+  const blogIndex = path.resolve (`./src/templates/blog-index.js`);
+  const blogAbout = path.resolve (`./src/templates/blog-about.js`);
+  const result = await graphql (
     `
       {
         allMarkdownRemark(
@@ -20,62 +21,72 @@ exports.createPages = async ({ graphql, actions }) => {
               }
               frontmatter {
                 title
+                date(formatString: "YYYY-MM-DD")
               }
             }
           }
         }
       }
     `
-  )
+  );
 
   if (result.errors) {
-    throw result.errors
+    throw result.errors;
   }
-  const posts = result.data.allMarkdownRemark.edges
+  const posts = result.data.allMarkdownRemark.edges;
   //  create homepage pagination
-  const postsPerPage = 2;
-  const numPages = Math.ceil(posts.length / postsPerPage);
-  const pageScore = Array.from({ length: postsPerPage }).map((k,v)=>v+1);
-  Array.from({ length: numPages }).forEach((_, i) => {
-    createPage({
+  const postsPerPage = 10;
+  const numPages = Math.ceil (posts.length / postsPerPage);
+  const pageScore = Array.from ({length: numPages}).map ((k, v) => v + 1);
+  Array.from ({length: numPages}).forEach ((_, i) => {
+    createPage ({
       path: i === 0 ? `/` : `/page/${i + 1}`,
       component: blogIndex,
       context: {
         currentPage: i + 1,
         totalPage: numPages,
-        pageScore:[].concat(pageScore.slice(0,pageScore.indexOf(i + 1)+1).slice(-6),pageScore.slice(pageScore.indexOf(i + 1)+1).slice(0,5)),
+        pageScore: [].concat (
+          pageScore.slice (0, pageScore.indexOf (i + 1) + 1).slice (-6),
+          pageScore.slice (pageScore.indexOf (i + 1) + 1).slice (0, 5)
+        ),
         limit: postsPerPage,
         skip: i * postsPerPage,
       },
-    })
-  })
+    });
+  });
 
   // Create blog posts pages.
-  posts.forEach((post, index) => {
-    const previous = index === posts.length - 1 ? null : posts[index + 1].node
-    const next = index === 0 ? null : posts[index - 1].node
+  posts.forEach ((post, index) => {
+    const previous = index === posts.length - 1 ? null : posts[index + 1].node;
+    const next = index === 0 ? null : posts[index - 1].node;
+    const date = post.node.frontmatter.date;
 
-    createPage({
-      path: post.node.fields.slug,
+    createPage ({
+      path: `/post/${date}${post.node.fields.slug}`,
       component: blogPost,
       context: {
         slug: post.node.fields.slug,
         previous,
         next,
       },
-    })
-  })
-}
+    });
+  });
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
+  createPage ({
+    path: `/about`,
+    component: blogAbout,
+  });
+};
+
+exports.onCreateNode = ({node, actions, getNode}) => {
+  const {createNodeField} = actions;
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
-    createNodeField({
+    const value = createFilePath ({node, getNode});
+    createNodeField ({
       name: `slug`,
       node,
       value,
-    })
+    });
   }
-}
+};

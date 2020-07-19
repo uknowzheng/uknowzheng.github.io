@@ -1,11 +1,13 @@
 module.exports = {
   siteMetadata: {
-    title: `Uknowzheng Tech Blog`,
+    title: `～ 全栈小黄人吖 ～`,
+    subTitle: `专注于前后端打通的固体移动工程师`,
     author: `uknowzheng`,
     description: `tech blog`,
+    profile:`目前就职于 华为云 主要致力于Nodejs后端方向研究`,
     siteUrl: `https://uknowzheng.github.io/`,
     social: {
-      github: `uknowzheng`,
+      github: `//github.com/uknowzheng`,
     },
   },
   plugins: [
@@ -49,22 +51,10 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: `gatsby-transformer-sharp`,
       options: {
-        //trackingId: `ADD YOUR TRACKING ID HERE`,
-      },
-    },
-    `gatsby-plugin-feed`,
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`,
+        // The option defaults to true
+        checkSupportedExtensions: false,
       },
     },
     `gatsby-plugin-offline`,
