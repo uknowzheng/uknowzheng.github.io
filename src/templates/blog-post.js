@@ -13,10 +13,6 @@ class BlogPostTemplate extends React.Component {
     const {previous, next} = pageContext;
     return (
       <Layout location={location} siteMetadata={siteMetadata}>
-        <SEO
-          title={post.frontmatter.title}
-          description={post.frontmatter.description || post.excerpt}
-        />
         <article
           style={{
             width: rhythm (28),
@@ -97,7 +93,6 @@ export const pageQuery = graphql`
       frontmatter {
         title
         date(formatString: "YYYY-MM-DD")
-        description
       }
     }
   }
