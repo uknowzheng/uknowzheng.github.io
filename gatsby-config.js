@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `～ 全栈小黄人吖 ～`,
-    subTitle: `专注于前后端打通的固体移动工程师`,
+    title: `～ 朝花夕拾 ～`,
+    subTitle: `专注于全栈方向的固体移动工程师`,
     author: `uknowzheng`,
     description: `tech blog`,
     profile:`目前就职于 华为云 主要致力于Nodejs后端方向研究`,
