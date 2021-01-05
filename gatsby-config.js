@@ -1,7 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `～ 朝花夕拾 ～`,
-    subTitle: `专注于全栈方向的固体移动工程师`,
+    title: `～ uknowzheng blog ～`,
     author: `uknowzheng`,
     description: `tech blog`,
     profile:`目前就职于 华为云 主要致力于Nodejs后端方向研究`,

@@ -78,7 +78,6 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
-        subTitle
         description
         author
         social{

@@ -1,22 +1,6 @@
 import Typography from "typography"
-import Wordpress2016 from "typography-theme-wordpress-2016"
-
-Wordpress2016.overrideThemeStyles = () => {
-  return {
-    img: {
-      background: '#fff',
-      padding: '5px',
-    },
-    body: {
-      fontFamily: 'smonospace',
-      fontStyle: 'normal',
-    },
-  }
-}
-
-delete Wordpress2016.googleFonts
-
-const typography = new Typography(Wordpress2016)
+import Theme from "typography-theme-irving"
+const typography = new Typography(Theme)
 
 // Hot reload typography in development.
 if (process.env.NODE_ENV !== `production`) {
