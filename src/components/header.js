@@ -1,12 +1,11 @@
 import React from 'react';
-import { scale } from '../utils/typography';
+// import { scale } from '../utils/typography';
 import { Link } from 'gatsby';
 export default (props) => {
   const { title } = props;
   return <header>
     <h1
       style={{
-        ...scale(1),
         marginBottom: 0,
         marginTop: 0,
       }}

@@ -3,14 +3,21 @@ module.exports = {
     title: `～ uknowzheng blog ～`,
     author: `uknowzheng`,
     description: `tech blog`,
-    profile:`目前就职于 华为云 主要致力于Nodejs后端方向研究`,
+    profile: `目前就职于 华为云 主要致力于Nodejs后端方向研究`,
     siteUrl: `https://uknowzheng.github.io/`,
     social: {
       github: `//github.com/uknowzheng`,
     },
   },
   plugins: [
-    `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-plugin-less`,
+      options: {
+        lessOptions: {
+          javascriptEnabled: true,
+        }
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -59,10 +66,10 @@ module.exports = {
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-plugin-typography`,
+      resolve: 'gatsby-plugin-antd',
       options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
+        style: true
+      }
+    }
   ],
 }
