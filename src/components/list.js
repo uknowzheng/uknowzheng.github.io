@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import { List, Avatar, Space } from 'antd';
+import { Link } from 'gatsby';
+import {
+  FileMarkdownOutlined
+} from '@ant-design/icons';
 
-export default ({ list }) => {
+export default ({ dataSource, pagination }) => {
+  const { currentPage, pageScore } = pagination;
   return (
     <List
       itemLayout="vertical"
@@ -10,33 +15,24 @@ export default ({ list }) => {
         onChange: page => {
           console.log(page);
         },
-        pageSize: 7,
+        current: currentPage,
+        pageSize: 10,
+        defaultCurrent: currentPage,
+        defaultPageSize: 10
       }}
-      dataSource={list}
-      footer={
-        <div>
-          <b>ant design</b> footer part
-      </div>
-      }
-      renderItem={({node}) => {
-        const title = node.frontmatter.title || node.fields.slug;
-        const dateStr = node.frontmatter.dateStr;
+      dataSource={dataSource}
+      renderItem={({ node }) => {
+        const { title, slug, date } = node.frontmatter;
         return <List.Item
-          key={node.fields.slug}
-          extra={
-            <img
-              width={272}
-              alt="logo"
-              src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-            />
-          }
+          key={slug}
         >
           <List.Item.Meta
-            avatar={<Avatar src={"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"} />}
-            title={<a href={"https://ant.design"}>{title}</a>}
-            description={dateStr}
+            avatar={<Avatar icon={<FileMarkdownOutlined />} />}
+            title={<Link to={`/post/${date}/${slug}`}>
+              {title}
+            </Link>}
+            description={date}
           />
-          {dateStr}
         </List.Item>;
       }}
     />

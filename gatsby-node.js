@@ -21,6 +21,7 @@ exports.createPages = async ({graphql, actions}) => {
               }
               frontmatter {
                 title
+                slug
                 date(formatString: "YYYY-MM-DD")
               }
             }
@@ -62,7 +63,7 @@ exports.createPages = async ({graphql, actions}) => {
     const date = post.node.frontmatter.date;
 
     createPage ({
-      path: `/post/${date}${post.node.fields.slug}`,
+      path: `/post/${date}/${post.node.frontmatter.slug}`,
       component: blogPost,
       context: {
         slug: post.node.fields.slug,

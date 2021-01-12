@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `～ uknowzheng blog ～`,
+    title: `Uknowzheng tech blog`,
     author: `uknowzheng`,
-    description: `tech blog`,
-    profile: `目前就职于 华为云 主要致力于Nodejs后端方向研究`,
+    description: ``,
+    profile: `主要致力于full stack方向研究`,
     siteUrl: `https://uknowzheng.github.io/`,
     social: {
       github: `//github.com/uknowzheng`,

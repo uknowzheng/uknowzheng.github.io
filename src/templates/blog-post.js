@@ -1,16 +1,30 @@
-// import React from 'react';
-// import {Link, graphql} from 'gatsby';
+import React from 'react';
+import { graphql } from 'gatsby';
+import { Typography } from 'antd';
+import PageLayout from '../components/page-layout';
+import './index.less';
 
-// import Layout from '../components/layout';
-// import SEO from '../components/seo';
-// // import {rhythm, scale} from '../utils/typography';
+const { Title, Text } = Typography;
+
+export default ({ data, location }) => {
+  console.log(data)
+  const { frontmatter, html } = data.markdownRemark;
+  const { title, date } = frontmatter;
+  return <PageLayout location={location} >
+    <Typography >
+      <Title>{date} {title}</Title>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+    </Typography>
+  </PageLayout>;
+};
+
+
 
 // class BlogPostTemplate extends React.Component {
 //   render () {
-//     const {data, pageContext,location} = this.props;
-//     const post = data.markdownRemark;
-//     const siteMetadata = data.site.siteMetadata;
-//     const {previous, next} = pageContext;
+
+// const siteMetadata = data.site.siteMetadata;
+// const { previous, next } = pageContext;
 //     return (
 //       <Layout location={location} siteMetadata={siteMetadata}>
 //         <article
@@ -30,7 +44,7 @@
 //               display: `block`,
 //             }}
 //           >
-//             {post.frontmatter.date}
+//             {post.frontmatter.date}html
 //           </p>
 //           <div dangerouslySetInnerHTML={{__html: post.html}} />
 //           <hr
@@ -68,26 +82,26 @@
 
 // export default BlogPostTemplate;
 
-// export const pageQuery = graphql`
-//   query BlogPostBySlug($slug: String!) {
-//     site {
-//       siteMetadata {
-//         title
-//         description
-//         author
-//         social{
-//           github
-//         }
-//       }
-//     }
-//     markdownRemark(fields: { slug: { eq: $slug } }) {
-//       id
-//       excerpt(pruneLength: 160)
-//       html
-//       frontmatter {
-//         title
-//         date(formatString: "YYYY-MM-DD")
-//       }
-//     }
-//   }
-// `;
+export const pageQuery = graphql`
+  query BlogPostBySlug($slug: String!) {
+    site {
+      siteMetadata {
+        title
+        description
+        author
+        social{
+          github
+        }
+      }
+    }
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      id
+      excerpt(pruneLength: 160)
+      html
+      frontmatter {
+        title
+        date(formatString: "YYYY-MM-DD")
+      }
+    }
+  }
+`;
