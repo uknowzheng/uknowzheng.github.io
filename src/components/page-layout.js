@@ -1,7 +1,6 @@
 import React from "react"
 import { Layout } from "antd"
 import Navigater from "./navigater"
-import ReactLive2d from "react-live2d"
 import Logo from "./logo"
 import "./page-layout.less"
 
