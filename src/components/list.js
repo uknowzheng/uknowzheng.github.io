@@ -11,7 +11,9 @@ export default ({ dataSource, pagination }) => {
       size="large"
       pagination={{
         onChange: page => {
-          navigate("/post/page/" + page)
+          if (typeof window !== `undefined`) {
+            navigate("/post/page/" + page)
+          }
         },
         showTotal: total => `总共 ${total} 篇文章`,
         current,
