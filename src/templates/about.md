@@ -1,18 +1,3 @@
-import React from 'react';
-import PageLayout from '../components/page-layout';
-import ReactMarkdown from "react-markdown"
-import './index.less';
-
-
-export default ({data,location}) => {
-  return (
-    <PageLayout location={location}>
-      <ReactMarkdown children={content} />
-    </PageLayout>
-  )
-};
-
-const content = `
 # 关于我
 
 ## 英文名Uknowzheng
@@ -38,12 +23,11 @@ OK，内容说完了，接下来有几个很明确的个人标签，关于家乡
 
 
 ## Talk is cheap, show me the code.
-- WebSite: http://uknowzheng.github.io/
-- Github: https://github.com/uknowzheng
-- Wechat: unknownzheng
-- Telegram: ProgramrUK
+WebSite: http://uknowzheng.github.io/
+Github: https://github.com/uknowzheng
+Wechat: unknownzheng
+Telegram: ProgramrUK
 
 
 ## 寄语 
 你一定能够成为你想要去成为的人
-`

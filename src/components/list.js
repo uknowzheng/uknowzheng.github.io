@@ -1,40 +1,38 @@
-import React, { Component } from 'react'
-import { List, Avatar, Space } from 'antd';
-import { Link } from 'gatsby';
-import {
-  FileMarkdownOutlined
-} from '@ant-design/icons';
+import React, { Component } from "react"
+import { List, Avatar, Space } from "antd"
+import { Link, navigate } from "gatsby"
+import { FileMarkdownOutlined } from "@ant-design/icons"
 
 export default ({ dataSource, pagination }) => {
-  const { currentPage, pageScore } = pagination;
+  const { current, total, pageSize } = pagination
   return (
     <List
       itemLayout="vertical"
       size="large"
       pagination={{
         onChange: page => {
-          console.log(page);
+          navigate("/post/page/" + page)
         },
-        current: currentPage,
-        pageSize: 10,
-        defaultCurrent: currentPage,
-        defaultPageSize: 10
+        showTotal: total => `总共 ${total} 篇文章`,
+        current,
+        pageSize,
+        total,
+        defaultCurrent: current,
+        defaultPageSize: pageSize,
       }}
       dataSource={dataSource}
       renderItem={({ node }) => {
-        const { title, slug, date } = node.frontmatter;
-        return <List.Item
-          key={slug}
-        >
-          <List.Item.Meta
-            avatar={<Avatar icon={<FileMarkdownOutlined />} />}
-            title={<Link to={`/post/${date}/${slug}`}>
-              {title}
-            </Link>}
-            description={date}
-          />
-        </List.Item>;
+        const { title, slug, date } = node.frontmatter
+        return (
+          <List.Item key={slug}>
+            <List.Item.Meta
+              avatar={<Avatar icon={<FileMarkdownOutlined />} />}
+              title={<Link to={`/post/${date}/${slug}`}>{title}</Link>}
+              description={date}
+            />
+          </List.Item>
+        )
       }}
     />
-  );
+  )
 }

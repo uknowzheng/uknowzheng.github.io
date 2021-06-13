@@ -7,7 +7,10 @@ import {
 } from '@ant-design/icons';
 
 export default () => {
-  const dataSource = [{ name: "首页", to: "/",icon:<FileMarkdownOutlined/>}, { name: "关于我", to: "/about",icon:<UserOutlined/>}];
+  const dataSource = [
+    { name: "首页", to: "/post/page/1", icon: <FileMarkdownOutlined /> },
+    { name: "关于我", to: "/about", icon: <UserOutlined /> },
+  ]
   const list = dataSource.map((item, index) => <Menu.Item key={index} icon={item.icon}>
     <Link to={item.to}>{item.name}</Link>
   </Menu.Item>);
