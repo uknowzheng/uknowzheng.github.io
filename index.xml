@@ -10,7 +10,13 @@
     <link>https://uknowzheng.github.io/Blogs/Demo-%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F</link>
     <guid>https://uknowzheng.github.io/Blogs/Demo-%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F</guid>
     <description><![CDATA[ 背景 简要说明为什么需要知识管理系统 核心思路 双链 + 标签 + 结构化 = 知识网络 1. ]]></description>
-    <pubDate>Mon, 13 Apr 2026 05:30:20 GMT</pubDate>
+    <pubDate>Mon, 13 Apr 2026 16:26:52 GMT</pubDate>
+  </item><item>
+    <title>欢迎</title>
+    <link>https://uknowzheng.github.io/</link>
+    <guid>https://uknowzheng.github.io/</guid>
+    <description><![CDATA[ 欢迎来到 UknowZheng Blog 这里是知识库分享博客。. ]]></description>
+    <pubDate>Mon, 13 Apr 2026 16:26:21 GMT</pubDate>
   </item><item>
     <title>Karpathy-Obsidian工作法</title>
     <link>https://uknowzheng.github.io/Blogs/Karpathy-Obsidian%E5%B7%A5%E4%BD%9C%E6%B3%95</link>
@@ -18,16 +24,16 @@
     <description><![CDATA[ Karpathy 的 Obsidian 工作法 来自 AI 领域知名研究者 Andrej Karpathy 的个人知识管理实践 核心哲学 Karpathy 的方法论核心是快速记录、持续整理、网络化链接。他不追求笔记的完美，而是在信息的流动中不断迭代和深化。 Seed → Refine → Connect → Output 四阶段工作流 1. ]]></description>
     <pubDate>Mon, 13 Apr 2026 00:00:00 GMT</pubDate>
   </item><item>
-    <title>欢迎</title>
-    <link>https://uknowzheng.github.io/</link>
-    <guid>https://uknowzheng.github.io/</guid>
-    <description><![CDATA[ 欢迎来到 UknowZheng Blog 这里是知识库分享博客。. ]]></description>
-    <pubDate>Sun, 12 Apr 2026 02:32:51 GMT</pubDate>
-  </item><item>
     <title>Obsidian 知识库设计分享</title>
     <link>https://uknowzheng.github.io/Slides/Demo-%E7%9F%A5%E8%AF%86%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%88%86%E4%BA%AB</link>
     <guid>https://uknowzheng.github.io/Slides/Demo-%E7%9F%A5%E8%AF%86%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%88%86%E4%BA%AB</guid>
     <description><![CDATA[ Obsidian 知识库设计分享 如何构建个人知识管理系统 目录 知识管理核心理念 知识库结构设计 标签与属性体系 MOC 索引设计 模板体系 总结与Q&amp;A 知识管理核心理念 解决问题 信息碎片化，难以查找 知识无法复用 笔记之间缺乏关联 核心思路 双链 + 标签 + 结构化 = 知识网络 flowchart LR A[信息输入] --&gt; B[结构化整理] B --&gt; C[双链关联] C --&gt; D[标签分类] D --&gt; E[知识网络] style A fill:#e8f4f8,stroke:#4a90d9 style B fill:#e8f4f8,strok... ]]></description>
+    <pubDate>Tue, 31 Mar 2026 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>README</title>
+    <link>https://uknowzheng.github.io/images/README</link>
+    <guid>https://uknowzheng.github.io/images/README</guid>
+    <description><![CDATA[ 本地图片 用于存放本地附件图片 说明 此目录用于存放不适合上传到图床的本地图片。 使用方式 ![图片描述](../../Assets/Images/图片名.png) 相关链接： 图传配置 - PicGo 图传配置 . ]]></description>
     <pubDate>Tue, 31 Mar 2026 00:00:00 GMT</pubDate>
   </item>
     </channel>
