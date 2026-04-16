@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr"><head><title>小程序架构升级Harness实践</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Inter:ital,wght@0,400;0,600;1,400;1,600&amp;family=JetBrains Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="UknowZheng Blog"/><meta property="og:title" content="小程序架构升级Harness实践"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="小程序架构升级Harness实践"/><meta name="twitter:description" content="小程序架构升级Harness实践 目录 Harness Engineering介绍 小程序架构升级如何针对Harness设计 后续展望 总结 Harness Engineering介绍 Harness Engineering(驾驭工程)是什么 提示词工程 → 上下文工程 → 驾驭工程 怎么让模型稳定、可靠、不失控 核心隐喻： 大模型 = CPU Agent = 操作系统，CPU 执行指令，OS 管理内存、调度进程、处理错误 行业洞察： “The model is commodity."/><meta property="og:description" content="小程序架构升级Harness实践 目录 Harness Engineering介绍 小程序架构升级如何针对Harness设计 后续展望 总结 Harness Engineering介绍 Harness Engineering(驾驭工程)是什么 提示词工程 → 上下文工程 → 驾驭工程 怎么让模型稳定、可靠、不失控 核心隐喻： 大模型 = CPU Agent = 操作系统，CPU 执行指令，OS 管理内存、调度进程、处理错误 行业洞察： “The model is commodity."/><meta property="og:image:alt" content="小程序架构升级Harness实践 目录 Harness Engineering介绍 小程序架构升级如何针对Harness设计 后续展望 总结 Harness Engineering介绍 Harness Engineering(驾驭工程)是什么 提示词工程 → 上下文工程 → 驾驭工程 怎么让模型稳定、可靠、不失控 核心隐喻： 大模型 = CPU Agent = 操作系统，CPU 执行指令，OS 管理内存、调度进程、处理错误 行业洞察： “The model is commodity."/><meta property="twitter:domain" content="uknowzheng.github.io"/><meta property="og:url" content="https://uknowzheng.github.io/Blogs/小程序架构升级Harness实践"/><meta property="twitter:url" content="https://uknowzheng.github.io/Blogs/小程序架构升级Harness实践"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="小程序架构升级Harness实践 目录 Harness Engineering介绍 小程序架构升级如何针对Harness设计 后续展望 总结 Harness Engineering介绍 Harness Engineering(驾驭工程)是什么 提示词工程 → 上下文工程 → 驾驭工程 怎么让模型稳定、可靠、不失控 核心隐喻： 大模型 = CPU Agent = 操作系统，CPU 执行指令，OS 管理内存、调度进程、处理错误 行业洞察： “The model is commodity."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" data-persist="true"/><style>.expand-button {
+<html lang="en" dir="ltr"><head><title>小程序架构升级Harness实践</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Inter:ital,wght@0,400;0,600;1,400;1,600&amp;family=JetBrains Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="UknowZheng Blog"/><meta property="og:title" content="小程序架构升级Harness实践"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="小程序架构升级Harness实践"/><meta name="twitter:description" content="小程序架构升级 Harness 实践 目录 Harness Engineering 介绍 小程序架构升级如何针对 Harness 设计 常见失败模式与应对 后续展望 总结 1."/><meta property="og:description" content="小程序架构升级 Harness 实践 目录 Harness Engineering 介绍 小程序架构升级如何针对 Harness 设计 常见失败模式与应对 后续展望 总结 1."/><meta property="og:image:alt" content="小程序架构升级 Harness 实践 目录 Harness Engineering 介绍 小程序架构升级如何针对 Harness 设计 常见失败模式与应对 后续展望 总结 1."/><meta property="twitter:domain" content="uknowzheng.github.io"/><meta property="og:url" content="https://uknowzheng.github.io/Blogs/小程序架构升级Harness实践"/><meta property="twitter:url" content="https://uknowzheng.github.io/Blogs/小程序架构升级Harness实践"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="小程序架构升级 Harness 实践 目录 Harness Engineering 介绍 小程序架构升级如何针对 Harness 设计 常见失败模式与应对 后续展望 总结 1."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" data-persist="true"/><style>.expand-button {
   position: absolute;
   display: flex;
   float: right;
@@ -115,148 +115,150 @@ pre:hover > .expand-button {
   padding: 0 12px;
   font-size: 14px;
 }
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://uknowzheng.github.io/index.xml"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https://uknowzheng.github.io/Blogs/小程序架构升级Harness实践-og-image.webp"/><meta property="og:image:url" content="https://uknowzheng.github.io/Blogs/小程序架构升级Harness实践-og-image.webp"/><meta name="twitter:image" content="https://uknowzheng.github.io/Blogs/小程序架构升级Harness实践-og-image.webp"/><meta property="og:image:type" content="image/.webp"/></head><body data-slug="Blogs/小程序架构升级Harness实践"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">UknowZheng Blog</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="slide-button" data-cfg="{&quot;ratio&quot;:&quot;16:9&quot;,&quot;navigation&quot;:{&quot;scroll&quot;:false,&quot;touch&quot;:true,&quot;click&quot;:false},&quot;timer&quot;:{&quot;startOnChange&quot;:true,&quot;resetable&quot;:true,&quot;enabled&quot;:true},&quot;includePresenterNotes&quot;:true,&quot;tags&quot;:true,&quot;index&quot;:true,&quot;align&quot;:&quot;left&quot;}"><button class="slide-icon" aria-label="Slide Toggle"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 -960 960 960" fill="currentColor" xml:space="preserve"><path d="m380-300 280-180-280-180v360ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"></path></svg></button></div></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-7" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../Blogs/">Blogs</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>小程序架构升级Harness实践</a></div></nav><h1 class="article-title">小程序架构升级Harness实践</h1><p show-comma="true" class="content-meta"><time datetime="2026-04-15T00:00:00.000Z">Apr 15, 2026</time><span>5 min read</span></p></div></div><article class="popover-hint"><h2 id="小程序架构升级harness实践">小程序架构升级Harness实践<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#小程序架构升级harness实践" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://uknowzheng.github.io/index.xml"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https://uknowzheng.github.io/Blogs/小程序架构升级Harness实践-og-image.webp"/><meta property="og:image:url" content="https://uknowzheng.github.io/Blogs/小程序架构升级Harness实践-og-image.webp"/><meta name="twitter:image" content="https://uknowzheng.github.io/Blogs/小程序架构升级Harness实践-og-image.webp"/><meta property="og:image:type" content="image/.webp"/></head><body data-slug="Blogs/小程序架构升级Harness实践"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">UknowZheng Blog</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="slide-button" data-cfg="{&quot;ratio&quot;:&quot;16:9&quot;,&quot;navigation&quot;:{&quot;scroll&quot;:false,&quot;touch&quot;:true,&quot;click&quot;:false},&quot;timer&quot;:{&quot;startOnChange&quot;:true,&quot;resetable&quot;:true,&quot;enabled&quot;:true},&quot;includePresenterNotes&quot;:true,&quot;tags&quot;:true,&quot;index&quot;:true,&quot;align&quot;:&quot;left&quot;}"><button class="slide-icon" aria-label="Slide Toggle"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 -960 960 960" fill="currentColor" xml:space="preserve"><path d="m380-300 280-180-280-180v360ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"></path></svg></button></div></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-6" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../Blogs/">Blogs</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>小程序架构升级Harness实践</a></div></nav><h1 class="article-title">小程序架构升级Harness实践</h1><p show-comma="true" class="content-meta"><time datetime="2026-04-15T00:00:00.000Z">Apr 15, 2026</time><span>11 min read</span></p></div></div><article class="popover-hint"><h1 id="小程序架构升级-harness-实践">小程序架构升级 Harness 实践<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#小程序架构升级-harness-实践" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
 <h2 id="目录">目录<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#目录" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
 <ol>
-<li>Harness Engineering介绍</li>
-<li>小程序架构升级如何针对Harness设计</li>
+<li>Harness Engineering 介绍</li>
+<li>小程序架构升级如何针对 Harness 设计</li>
+<li>常见失败模式与应对</li>
 <li>后续展望</li>
 <li>总结</li>
 </ol>
-<h3 id="harness-engineering介绍">Harness Engineering介绍<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#harness-engineering介绍" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
-<h4 id="harness-engineering驾驭工程是什么">Harness Engineering(驾驭工程)是什么<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#harness-engineering驾驭工程是什么" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
-<p>提示词工程  <span>→</span>  上下文工程 <span>→</span> 驾驭工程</p>
-<p>怎么让模型稳定、可靠、不失控
-<strong>核心隐喻：</strong></p>
+<hr/>
+<h2 id="1-harness-engineering-介绍">1. Harness Engineering 介绍<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-harness-engineering-介绍" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="11-什么是-harness-engineering">1.1 什么是 Harness Engineering<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#11-什么是-harness-engineering" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<blockquote>
+<p>Harness Engineering（Harness 驾驭工程）是构建 AI Agent 生产级基础设施的学科。如果说模型是引擎，Harness 就是操作系统——它管理上下文、编排工具、验证输出、持久化状态，决定 Agent 在真实环境中如何可靠运行。</p>
+</blockquote>
+<p><strong>核心隐喻：</strong></p>
 <ul>
-<li><strong>大模型 = CPU</strong></li>
-<li><strong>Agent = 操作系统</strong>，CPU 执行指令，OS 管理内存、调度进程、处理错误</li>
+<li><strong>大模型 = CPU</strong>，提供底层算力，但不知道要做什么</li>
+<li><strong>Harness = 操作系统</strong>，管理上下文、编排工具、验证输出、持久化状态</li>
 </ul>
 <p><strong>行业洞察：</strong></p>
 <blockquote>
 <p>“The model is commodity. The harness is moat.”（模型是商品，Harness 才是护城河）</p>
 </blockquote>
 <p>两个团队使用相同模型，任务完成率可能相差 40 个百分点（60% vs 98%），差异完全来自 Harness 质量。</p>
-<h4 id="harness-engineering-定义">Harness Engineering 定义<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#harness-engineering-定义" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
-<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;mindmap\n  root((Agent Harness))\n    上下文工程\n    工具编排\n    状态管理\n    验证安全\n    人机协同\n    生命周期管理&quot;">mindmap
+<h3 id="12-harness-六大核心组件">1.2 Harness 六大核心组件<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#12-harness-六大核心组件" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;mindmap\n  root((Agent Harness))\n    上下文工程\n      上下文窗口管理\n      信息摘要与裁剪\n      结构化上下文注入\n    工具编排\n      动态工具范围\n      参数验证\n      超时与错误处理\n    状态管理\n      检查点恢复\n      跨会话记忆\n      进度文件模式\n    验证安全\n      输出验证循环\n      模式校验\n      自动化测试\n    人机协同\n      审批门控\n      高风险操作拦截\n      渐进式放权\n    生命周期管理\n      健康检查\n      资源限制\n      崩溃恢复&quot;">mindmap
   root((Agent Harness))
     上下文工程
+      上下文窗口管理
+      信息摘要与裁剪
+      结构化上下文注入
     工具编排
+      动态工具范围
+      参数验证
+      超时与错误处理
     状态管理
+      检查点恢复
+      跨会话记忆
+      进度文件模式
     验证安全
+      输出验证循环
+      模式校验
+      自动化测试
     人机协同
+      审批门控
+      高风险操作拦截
+      渐进式放权
     生命周期管理
+      健康检查
+      资源限制
+      崩溃恢复
 </code><div id="mermaid-container" role="dialog"><div id="mermaid-space"><div class="mermaid-content"></div></div></div></pre>
-<p>人机协同
-上下文工程
-工具编排
-状态管理
-验证安全
-生命周期管理</p>
-<h3 id="小程序架构升级如何针对harness设计">小程序架构升级如何针对Harness设计<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#小程序架构升级如何针对harness设计" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
-<h3 id="状态管理">状态管理<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#状态管理" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h3 id="13-提示词工程-vs-上下文工程-vs-harness-engineering">1.3 提示词工程 vs 上下文工程 vs Harness Engineering<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#13-提示词工程-vs-上下文工程-vs-harness-engineering" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>层级</th><th>范围</th><th>关注点</th><th>示例</th></tr></thead><tbody><tr><td><strong>提示词工程</strong></td><td>最窄</td><td>如何写 system prompt 和 user prompt</td><td>设计指令模板、few-shot 示例</td></tr><tr><td><strong>上下文工程</strong></td><td>中等</td><td>模型在每个步骤看到什么信息</td><td>检索文档、历史摘要、工具结果、环境状态</td></tr><tr><td><strong>Harness Engineering</strong></td><td>最广</td><td>Agent 的完整运行时基础设施</td><td>上下文管理 + 工具编排 + 验证 + 状态 + 安全</td></tr></tbody></table></div>
+<p><strong>关系总结：</strong></p>
 <ul>
-<li>OpenSpec需求管理（短任务）</li>
+<li>提示词工程是上下文工程的子集</li>
+<li>上下文工程是 Harness Engineering 的六大核心组件之一</li>
+<li>Harness Engineering 是最顶层的工程学科</li>
 </ul>
-<h3 id="上下文工程">上下文工程<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#上下文工程" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<hr/>
+<h2 id="2-小程序架构升级如何针对-harness-设计">2. 小程序架构升级如何针对 Harness 设计<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-小程序架构升级如何针对-harness-设计" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="21-上下文工程">2.1 上下文工程<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#21-上下文工程" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>在小程序项目中，我们通过三层规则体系实现上下文工程：</p>
 <h4 id="全局规则">全局规则<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#全局规则" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
-<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="md" data-theme="github-light github-dark"><code data-language="md" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;">1.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> 保持中文交流</span></span>
-<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;">2.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> 任务完成后直接总结,修改的内容不需要展示出来,不生成多余文件,除非用户要求或者询问过用户同意,否则不要生成md文档</span></span>
-<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;">3.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> 优先搜索替换，避免重写整个文件</span></span>
-<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;">4.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> 长文件分段创建/编辑，大文件分段读取</span></span>
-<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;">5.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> 编辑前按需获取相关代码上下文</span></span>
-<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;">6.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> 默认不询问是否执行、是否实现，全自动自主一次性完成需求，注意要全自动不要中途停下询问</span></span>
-<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;">7.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> 不创建简化方法、简化文件、临时方案或测试代码文件</span></span>
-<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;">8.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> 任何情况下不要自己进入测试模式，不要运行任何编译脚本和主动编译，不需要写测试用例，可以告诉用户如何测试</span></span>
-<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;">9.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> 注释不要用表情符号注释</span></span>
-<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;">10.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> 不要在没有代码证据的情况进行猜测，以实际证据为基准</span></span></code></pre></figure>
-<h4 id="项目规则如何编写">项目规则如何编写<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#项目规则如何编写" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
-<pre><code># Project Rules
-## 技术栈
-- **框架**: UniApp 2.0.2 + Vue 2.6.10 + Composition API (@vue/composition-api)
-- **构建**: Vue CLI 4.x + Webpack
-- **包管理**: pnpm + Node.js 22
-- **代码规范**: ESLint 6.8.0 + Prettier 2.8.8 + Husky pre-commit
-- **状态管理**: Vuex 3.2.0、Pinia 2.1.7
-- **测试**: Jest + @vue/test-utils + @vue/cli-plugin-unit-jest
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="yaml" data-theme="github-light github-dark"><code data-language="yaml" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># Project Rules - 全局约束</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">## 核心原则</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">1. 保持中文交流</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">2. 任务完成后直接总结，修改的内容不需要展示出来，不生成多余文件，除非用户要求或者询问过用户同意，否则不要生成 md 文档</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">3. 优先搜索替换，避免重写整个文件</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">4. 长文件分段创建/编辑，大文件分段读取</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">5. 编辑前按需获取相关代码上下文</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">6. 默认不询问是否执行、是否实现，全自动自主一次性完成需求，注意要全自动不要中途停下询问</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">7. 不创建简化方法、简化文件、临时方案或测试代码文件</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">8. 任何情况下不要自己进入测试模式，不要运行任何编译脚本和主动编译，不需要写测试用例，可以告诉用户如何测试</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">9. 注释不要用表情符号注释</span></span>
+<span data-line><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">10. 不要在没有代码证据的情况下进行猜测，以实际证据为基��</span></span></code></pre></figure>
+<h4 id="项目规则">项目规则<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#项目规则" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="yaml" data-theme="github-light github-dark"><code data-language="yaml" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># Project Rules - 小程序项目</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">## 技术栈</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">- </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">*框架**: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">UniApp 2.0.2 + Vue 2.6.10 + Composition API (@vue/composition-api)</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">- </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">*构建**: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">Vue CLI 4.x + Webpack</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">- </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">*包管理**: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">pnpm + Node.js 22</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">- </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">*代码规范**: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">ESLint 6.8.0 + Prettier 2.8.8 + Husky pre-commit</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">- </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">*状态管理**: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">Vuex 3.2.0、Pinia 2.1.7</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">- </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">*测试**: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">Jest + @vue/test-utils + @vue/cli-plugin-unit-jest</span></span></code></pre></figure>
+<h2 id="skill">SKILL<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#skill" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>#### Skills（技能库）
+
+| 开发场景 | 使用 Skill | 说明 |
+|---------|-----------|------|
+| 目录结构组织 | `directory-structure-skill` | 标准化目录结构 |
+| 文件/变量命名 | `naming-conventions-skill` | 代码规范 |
+| 新建页面 | `page-development-skill` | 页面模板 |
+| 写业务逻辑 | `composables-writing-skill` | Composables 开发 |
+| 封装 API 服务 | `services-development-skill` | API 服务封装 |
+| 状态管理 | `store-usage-skill` | Vuex/Pinia |
+| 写组件 | `component-development-skill` | 组件开发 |
+| 路由跳转 | `router-navigation-skill` | 路由操作 |
+| 图片处理 | `imgurl-usage-skill` | 图片处理 |
+| 埋点 | `track-development-skill` | 埋点上报 |
+| 监控上报 | `tingyun-monitor-skill` | 性能监控 |
+| 代码检查 | `git-safety-skill` | Git 安全检查 |
+| 构建部署 | `uniapp-deployment-skill` | 构建部署 |
 </code></pre>
-<h4 id="skills">skills<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#skills" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="table-container"><table><thead><tr><th>开发场景</th><th>使用 Skill</th></tr></thead><tbody><tr><td>目录结构怎么组织</td><td><code>directory-structure-skill</code></td></tr><tr><td>文件/变量怎么命名</td><td><code>naming-conventions-skill</code></td></tr><tr><td>新建页面</td><td><code>page-development-skill</code></td></tr><tr><td>写业务逻辑（Composables）</td><td><code>composables-writing-skill</code></td></tr><tr><td>封装 API 服务</td><td><code>services-development-skill</code></td></tr><tr><td>使用 Vuex/Pinia 状态管理</td><td><code>store-usage-skill</code></td></tr><tr><td>写组件</td><td><code>component-development-skill</code></td></tr><tr><td>写测试（TDD）</td><td><code>composables-testing-skill</code></td></tr><tr><td>路由跳转</td><td><code>router-navigation-skill</code></td></tr><tr><td>图片处理（兜底等）</td><td><code>imgurl-usage-skill</code></td></tr><tr><td>埋点</td><td><code>track-development-skill</code></td></tr><tr><td>监控上报</td><td><code>tingyun-monitor-skill</code></td></tr><tr><td>代码提交前检查</td><td><code>git-safety-skill</code></td></tr><tr><td>构建/部署</td><td><code>uniapp-deployment-skill</code></td></tr></tbody></table></div>
-<h3 id="工具编排">工具编排<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#工具编排" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><strong>关键实践：</strong></p>
 <ul>
-<li>要点1</li>
-<li>要点2</li>
-<li>要点3</li>
+<li>规划阶段限制写权限，防止过度生成</li>
+<li>执行阶段启用构建和测试工具</li>
+<li>敏感操作（删除、配置变更）需要额外确认</li>
 </ul>
-<h3 id="验证安全">验证安全<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#验证安全" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h3 id="23-验证安全">2.3 验证安全<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#23-验证安全" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
 <h4 id="轻量级静态检查">轻量级静态检查<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#轻量级静态检查" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
-<h5 id="eslint--preitter">Eslint + Preitter<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#eslint--preitter" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h5>
-<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;graph LR\n    A[提交代码] --> B{ESLint + Prettier}\n    B -->|自动修复| C[语法检查]\n    C -->|语法通过| D[提交通过]\n    C -->|语法失败| F[❌ 阻止提交]\n    \n    style B fill:#fff3e0\n    style D fill:#e1f5fe\n&quot;">graph LR
+<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;graph LR\n    A[提交代码] --> B{ESLint + Prettier}\n    B -->|自动修复| C[语法检查]\n    C -->|语法通过| D[提交通过]\n    C -->|语法失败| F[❌ 阻止提交]\n    \n    style B fill:#fff3e0\n    style D fill:#e1f5fe\n    style F fill:#ffcdd2&quot;">graph LR
     A[提交代码] --> B{ESLint + Prettier}
     B -->|自动修复| C[语法检查]
     C -->|语法通过| D[提交通过]
@@ -264,30 +266,191 @@ pre:hover > .expand-button {
     
     style B fill:#fff3e0
     style D fill:#e1f5fe
-
+    style F fill:#ffcdd2
 </code><div id="mermaid-container" role="dialog"><div id="mermaid-space"><div class="mermaid-content"></div></div></div></pre>
-<h5 id="tdd">TDD<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#tdd" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h5>
+<p><strong>验证层级：</strong></p>
+<ol>
+<li><strong>语法检查</strong>：ESLint + Prettier 自动修复</li>
+<li><strong>类型检查</strong>：TypeScript 编译检查</li>
+<li><strong>单元测试</strong>：Jest 测试覆盖</li>
+<li><strong>集成测试</strong>：E2E 测试验证</li>
+</ol>
+<h4 id="tdd-工作流">TDD 工作流<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#tdd-工作流" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;flowchart TD\n    A[Red: 编写失败测试] --> B[Green: 写最小实现]\n    B --> C[Refactor: 重构]\n    C --> D{测试通过?}\n    D -->|是| E[提交]\n    D -->|否| A\n    \n    style A fill:#ffcdd2\n    style D fill:#c8e6c9&quot;">flowchart TD
+    A[Red: 编写失败测试] --> B[Green: 写最小实现]
+    B --> C[Refactor: 重构]
+    C --> D{测试通过?}
+    D -->|是| E[提交]
+    D -->|否| A
+    
+    style A fill:#ffcdd2
+    style D fill:#c8e6c9
+</code><div id="mermaid-container" role="dialog"><div id="mermaid-space"><div class="mermaid-content"></div></div></div></pre>
+<p><strong>核心原则：</strong></p>
 <ul>
-<li>composables-testing-skill - TDD 测试</li>
-<li>git-safety-skill - 代码安全检查</li>
+<li>测试断言业务行为，而非实现细节</li>
+<li>每次只添加一个新行为</li>
+<li>AI Agent 必须强制 TDD 纪律</li>
 </ul>
-<h3 id="生命周期">生命周期<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#生命周期" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h3 id="24-状态管理">2.4 状态管理<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#24-状态管理" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h4 id="sdd短任务">SDD（短任务）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#sdd短任务" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>对于短平快的任务，使用 OpenSpec 格式定义需求：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="yaml" data-theme="github-light github-dark"><code data-language="yaml" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># open-spec.yaml</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">spec</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">:</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">  title</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;用户登录功能&quot;</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">  target</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;pages/login/index.vue&quot;</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">  requirements</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">:</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    - </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;支持手机号 + 验证码登录&quot;</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    - </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;支持微信授权登录&quot;</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    - </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;登录成功后跳转首页&quot;</span></span>
+<span data-line><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">  acceptance</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">:</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    - </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;验证码发送间隔 60 秒&quot;</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    - </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;错误提示清晰&quot;</span></span></code></pre></figure>
+<p><strong>OpenSpec 工作流：</strong></p>
+<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;flowchart TD\n    A[创建 OpenSpec] --> B[定义需求和验收标准]\n    B --> C[AI 执行实现]\n    C --> D{验收通过?}\n    D -->|是| E[归档到 Spec History]\n    D -->|否| C\n    E --> F[任务完成]\n    \n    style A fill:#e1f5fe\n    style E fill:#c8e6c9&quot;">flowchart TD
+    A[创建 OpenSpec] --> B[定义需求和验收标准]
+    B --> C[AI 执行实现]
+    C --> D{验收通过?}
+    D -->|是| E[归档到 Spec History]
+    D -->|否| C
+    E --> F[任务完成]
+    
+    style A fill:#e1f5fe
+    style E fill:#c8e6c9
+</code><div id="mermaid-container" role="dialog"><div id="mermaid-space"><div class="mermaid-content"></div></div></div></pre>
+<p><strong>特点：</strong></p>
 <ul>
-<li>本地构建编译
-<ul>
-<li>uniapp-deployment-skill</li>
+<li>格式轻量，AI 可直接消费</li>
+<li>每次任务独立，不累积状态</li>
+<li>适合 10-30 分钟的简单任务</li>
 </ul>
-</li>
-<li>运行时监控打点
+<p><strong>归档方式（类似数据库 Migrate）：</strong></p>
+<pre><code>specs/
+├── history/              # 历史规格归档
+│   ├── 2026-04-15-login/
+│   │   ├── open-spec.yaml
+│   │   └── accepted.md
+│   └── 2026-04-14-user-profile/
+│       ├── open-spec.yaml
+│       └── accepted.md
+└── active/            # 当前活跃任务
+    └── open-spec.yaml
+</code></pre>
+<p>类似于数据库 migrate：</p>
 <ul>
-<li>tingyun-monitor-skill</li>
+<li>每完成一个任务，生成一个 spec snapshot</li>
+<li>可追溯、可回溯</li>
+<li>便于复盘和知识复用</li>
 </ul>
-</li>
-</ul>
-<h3 id="人机协同">人机协同<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#人机协同" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h4 id="长任务暂时还没有很好的工作流">长任务暂时还没有很好的工作流<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#长任务暂时还没有很好的工作流" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<h3 id="25-生命周期管理">2.5 生命周期管理<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#25-生命周期管理" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><strong>关键实践：</strong></p>
 <ul>
-<li>高风险文件改动需要人工确认</li>
-</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-2" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#小程序架构升级harness实践" data-for="小程序架构升级harness实践">小程序架构升级Harness实践</a></li><li class="depth-0"><a href="#目录" data-for="目录">目录</a></li><li class="depth-1"><a href="#harness-engineering介绍" data-for="harness-engineering介绍">Harness Engineering介绍</a></li><li class="depth-1"><a href="#小程序架构升级如何针对harness设计" data-for="小程序架构升级如何针对harness设计">小程序架构升级如何针对Harness设计</a></li><li class="depth-1"><a href="#状态管理" data-for="状态管理">状态管理</a></li><li class="depth-1"><a href="#上下文工程" data-for="上下文工程">上下文工程</a></li><li class="depth-1"><a href="#工具编排" data-for="工具编排">工具编排</a></li><li class="depth-1"><a href="#验证安全" data-for="验证安全">验证安全</a></li><li class="depth-1"><a href="#生命周期" data-for="生命周期">生命周期</a></li><li class="depth-1"><a href="#人机协同" data-for="人机协同">人机协同</a></li><li class="overflow-end"></li></ul></div><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+<li>本地构建编译：每次修改后自动构建验证</li>
+<li>运行时监控：记录执行步骤和耗时</li>
+<li>崩溃恢复：从最近检查点重新开始</li>
+</ul>
+<h3 id="26-人机协同">2.6 人机协同<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#26-人机协同" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><strong>通过Rule规则进行人工确认：</strong></p>
+<ul>
+<li>高风险文件（package.json、路由配置）改动需要人工确认</li>
+<li>删除操作需要二次确认</li>
+</ul>
+<hr/>
+<h2 id="3-常见失败模式与应对">3. 常见失败模式与应对<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-常见失败模式与应对" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>失败模式</th><th>症状</th><th>解决方案</th></tr></thead><tbody><tr><td><strong>上下文腐烂</strong></td><td>重新解决已解决的问题、自相矛盾</td><td>主动摘要、进度文件</td></tr><tr><td><strong>工具爆炸</strong></td><td>工具选择错误增加、格式错误</td><td>动态限制工具范围</td></tr><tr><td><strong>静默失败</strong></td><td>工具调用失败但继续执行</td><td>每次调用后结构化验证</td></tr><tr><td><strong>无限循环</strong></td><td>同一错误反复重试</td><td>最大重试次数、循环检测</td></tr><tr><td><strong>状态污染</strong></td><td>崩溃恢复后外部世界已变化</td><td>恢复时验证前置条件</td></tr></tbody></table></div>
+<hr/>
+<h2 id="4-后续展望">4. 后续展望<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-后续展望" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="渐进式建设路径">渐进式建设路径<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#渐进式建设路径" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<pre><button class="expand-button" aria-label="Expand mermaid diagram" data-view-component="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 1.06L2.56 7h10.88l-2.22-2.22a.75.75 0 011.06-1.06l3.5 3.5a.75.75 0 010 1.06l-3.5 3.5a.75.75 0 11-1.06-1.06l2.22-2.22H2.56l2.22 2.22a.75.75 0 11-1.06 1.06l-3.5-3.5a.75.75 0 010-1.06l3.5-3.5z"></path></svg></button><code class="mermaid" data-clipboard="&quot;flowchart TD\n    A[最小可行 Harness] -->|Phase 1| B[验证循环]\n    B -->|Phase 2| C[状态持久化]\n    C -->|Phase 3| D[可观测性]\n    D -->|Phase 4| E[人机协同]\n    E --> F[生产级 Harness]\n    \n    style A fill:#e1f5fe\n    style B fill:#fff3e0\n    style C fill:#f3e5f5\n    style D fill:#e0f2f1\n    style F fill:#c8e6c9&quot;">flowchart TD
+    A[最小可行 Harness] -->|Phase 1| B[验证循环]
+    B -->|Phase 2| C[状态持久化]
+    C -->|Phase 3| D[可观测性]
+    D -->|Phase 4| E[人机协同]
+    E --> F[生产级 Harness]
+    
+    style A fill:#e1f5fe
+    style B fill:#fff3e0
+    style C fill:#f3e5f5
+    style D fill:#e0f2f1
+    style F fill:#c8e6c9
+</code><div id="mermaid-container" role="dialog"><div id="mermaid-space"><div class="mermaid-content"></div></div></div></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>阶段</th><th>重点</th><th>收益</th></tr></thead><tbody><tr><td>Phase 1</td><td>验证循环</td><td>最高可靠性提升</td></tr><tr><td>Phase 2</td><td>状态持久化</td><td>崩溃恢复，30-50% token 节省</td></tr><tr><td>Phase 3</td><td>可观测性</td><td>追踪执行、成本、失败模式</td></tr><tr><td>Phase 4</td><td>人机协同</td><td>生产安全网</td></tr></tbody></table></div>
+<hr/>
+<h2 id="5-总结">5. 总结<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-总结" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="关键要点">关键要点<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#关键要点" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li><strong>Harness 是护城河</strong>：模型是商品，差异来自 Harness 质量</li>
+<li><strong>六大组件</strong>：上下文工程 + 工具编排 + 状态管理 + 验证安全 + 人机协同 + 生命周期</li>
+<li><strong>三层规则</strong>：全局规则 + 项目规则 + Skills</li>
+<li><strong>验证优先</strong>：TDD 约束 Agent，防止跳过验证</li>
+<li><strong>渐进建设</strong>：从简单开始，观察失败模式再添加基础设施</li>
+</ol></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-2" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#小程序架构升级-harness-实践" data-for="小程序架构升级-harness-实践">小程序架构升级 Harness 实践</a></li><li class="depth-1"><a href="#目录" data-for="目录">目录</a></li><li class="depth-1"><a href="#1-harness-engineering-介绍" data-for="1-harness-engineering-介绍">1. Harness Engineering 介绍</a></li><li class="depth-2"><a href="#11-什么是-harness-engineering" data-for="11-什么是-harness-engineering">1.1 什么是 Harness Engineering</a></li><li class="depth-2"><a href="#12-harness-六大核心组件" data-for="12-harness-六大核心组件">1.2 Harness 六大核心组件</a></li><li class="depth-2"><a href="#13-提示词工程-vs-上下文工程-vs-harness-engineering" data-for="13-提示词工程-vs-上下文工程-vs-harness-engineering">1.3 提示词工程 vs 上下文工程 vs Harness Engineering</a></li><li class="depth-1"><a href="#2-小程序架构升级如何针对-harness-设计" data-for="2-小程序架构升级如何针对-harness-设计">2. 小程序架构升级如何针对 Harness 设计</a></li><li class="depth-2"><a href="#21-上下文工程" data-for="21-上下文工程">2.1 上下文工程</a></li><li class="depth-1"><a href="#skill" data-for="skill">SKILL</a></li><li class="depth-2"><a href="#23-验证安全" data-for="23-验证安全">2.3 验证安全</a></li><li class="depth-2"><a href="#24-状态管理" data-for="24-状态管理">2.4 状态管理</a></li><li class="depth-2"><a href="#25-生命周期管理" data-for="25-生命周期管理">2.5 生命周期管理</a></li><li class="depth-2"><a href="#26-人机协同" data-for="26-人机协同">2.6 人机协同</a></li><li class="depth-1"><a href="#3-常见失败模式与应对" data-for="3-常见失败模式与应对">3. 常见失败模式与应对</a></li><li class="depth-1"><a href="#4-后续展望" data-for="4-后续展望">4. 后续展望</a></li><li class="depth-2"><a href="#渐进式建设路径" data-for="渐进式建设路径">渐进式建设路径</a></li><li class="depth-1"><a href="#5-总结" data-for="5-总结">5. 总结</a></li><li class="depth-2"><a href="#关键要点" data-for="关键要点">关键要点</a></li><li class="overflow-end"></li></ul></div><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
                 s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
                 c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
                 C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
