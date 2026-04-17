@@ -23,12 +23,6 @@
     <guid>https://uknowzheng.github.io/Blogs/Karpathy-Obsidian%E7%AC%94%E8%AE%B0%E6%B3%95</guid>
     <description><![CDATA[ Karpathy 的 Obsidian 笔记法 来自 AI 领域知名研究者 Andrej Karpathy 的个人知识管理实践 核心哲学 Karpathy 的方法论核心是快速记录、持续整理、网络化链接。他不追求笔记的完美，而是在信息的流动中不断迭代和深化。 Seed → Refine → Connect → Output 四阶段工作流 1. ]]></description>
     <pubDate>Mon, 13 Apr 2026 00:00:00 GMT</pubDate>
-  </item><item>
-    <title>Obsidian 知识库设计分享</title>
-    <link>https://uknowzheng.github.io/Slides/Demo-%E7%9F%A5%E8%AF%86%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%88%86%E4%BA%AB</link>
-    <guid>https://uknowzheng.github.io/Slides/Demo-%E7%9F%A5%E8%AF%86%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%88%86%E4%BA%AB</guid>
-    <description><![CDATA[ Obsidian 知识库设计分享 如何构建个人知识管理系统 目录 知识管理核心理念 知识库结构设计 标签与属性体系 MOC 索引设计 模板体系 总结与Q&amp;A 知识管理核心理念 解决问题 信息碎片化，难以查找 知识无法复用 笔记之间缺乏关联 核心思路 双链 + 标签 + 结构化 = 知识网络 flowchart LR A[信息输入] --&gt; B[结构化整理] B --&gt; C[双链关联] C --&gt; D[标签分类] D --&gt; E[知识网络] style A fill:#e8f4f8,stroke:#4a90d9 style B fill:#e8f4f8,strok... ]]></description>
-    <pubDate>Tue, 31 Mar 2026 00:00:00 GMT</pubDate>
   </item>
     </channel>
   </rss>
