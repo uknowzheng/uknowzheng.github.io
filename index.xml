@@ -6,6 +6,12 @@
       <description>Last 10 notes on UknowZheng Blog</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>Mac开发环境搭建</title>
+    <link>https://uknowzheng.github.io/Blogs/Mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA</link>
+    <guid>https://uknowzheng.github.io/Blogs/Mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA</guid>
+    <description><![CDATA[ 背景 因为经常跳槽的缘故，所以经常要配置mac机器的开发机环境。所以打算整理下配置的流程，写一份工具教程。 新机环境初始化 新机到手的时候第一步，主要是要把Xcode Command Line Tools先安装好，因为一般新手一上来就会先安装Brew包管理器，但是过程会因为Xcode Command Line Tools没有安装，中断Brew安装。有时候Xcode Command Line Tools因为网络问题会中断，从而中断整个brew流程。这时候要可能要重新卸载brew再安装，为了确保流程通畅，我们需要先安装好Xcode Command Line Tools。 打开Commond + 空... ]]></description>
+    <pubDate>Wed, 22 Apr 2026 00:00:00 GMT</pubDate>
+  </item><item>
     <title>小程序架构升级Harness工程化实践</title>
     <link>https://uknowzheng.github.io/Blogs/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84%E5%8D%87%E7%BA%A7Harness%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E8%B7%B5</link>
     <guid>https://uknowzheng.github.io/Blogs/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84%E5%8D%87%E7%BA%A7Harness%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E8%B7%B5</guid>
