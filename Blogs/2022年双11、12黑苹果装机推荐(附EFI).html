@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>2022年双11、12黑苹果装机推荐(附EFI)</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Inter:ital,wght@0,400;0,600;1,400;1,600&amp;family=JetBrains Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="UknowZheng Blog"/><meta property="og:title" content="2022年双11、12黑苹果装机推荐(附EFI)"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="2022年双11、12黑苹果装机推荐(附EFI)"/><meta name="twitter:description" content="EFI链接： github.com/uknowzheng/Hackintosh-12490F-B660M-MORTAR-6600XT 最终成品： 完美黑苹果，WIFI 蓝牙 Airdorp 显卡 核心驱动 声卡均能够正常使用 娱乐大师跑分娱乐一下 具体配置如图 背景： 很久就想组一部高性价比而且比较现代的台式机了，刚好遇到双11配件降价，于是购买了如下配件： 部件具体配置价格链接cpuintel i5-12490F1299（板U套装）u.jd.com/eMfVpVe （单独CPU）主板MSI B660M 迫击炮 DDR4不带wifi999（板U套装）u.jd.com/eMffaiw （板U）内..."/><meta property="og:description" content="EFI链接： github.com/uknowzheng/Hackintosh-12490F-B660M-MORTAR-6600XT 最终成品： 完美黑苹果，WIFI 蓝牙 Airdorp 显卡 核心驱动 声卡均能够正常使用 娱乐大师跑分娱乐一下 具体配置如图 背景： 很久就想组一部高性价比而且比较现代的台式机了，刚好遇到双11配件降价，于是购买了如下配件： 部件具体配置价格链接cpuintel i5-12490F1299（板U套装）u.jd.com/eMfVpVe （单独CPU）主板MSI B660M 迫击炮 DDR4不带wifi999（板U套装）u.jd.com/eMffaiw （板U）内..."/><meta property="og:image:alt" content="EFI链接： github.com/uknowzheng/Hackintosh-12490F-B660M-MORTAR-6600XT 最终成品： 完美黑苹果，WIFI 蓝牙 Airdorp 显卡 核心驱动 声卡均能够正常使用 娱乐大师跑分娱乐一下 具体配置如图 背景： 很久就想组一部高性价比而且比较现代的台式机了，刚好遇到双11配件降价，于是购买了如下配件： 部件具体配置价格链接cpuintel i5-12490F1299（板U套装）u.jd.com/eMfVpVe （单独CPU）主板MSI B660M 迫击炮 DDR4不带wifi999（板U套装）u.jd.com/eMffaiw （板U）内..."/><meta property="twitter:domain" content="uknowzheng.github.io"/><meta property="og:url" content="https://uknowzheng.github.io/Blogs/2022年双11、12黑苹果装机推荐(附EFI)"/><meta property="twitter:url" content="https://uknowzheng.github.io/Blogs/2022年双11、12黑苹果装机推荐(附EFI)"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="EFI链接： github.com/uknowzheng/Hackintosh-12490F-B660M-MORTAR-6600XT 最终成品： 完美黑苹果，WIFI 蓝牙 Airdorp 显卡 核心驱动 声卡均能够正常使用 娱乐大师跑分娱乐一下 具体配置如图 背景： 很久就想组一部高性价比而且比较现代的台式机了，刚好遇到双11配件降价，于是购买了如下配件： 部件具体配置价格链接cpuintel i5-12490F1299（板U套装）u.jd.com/eMfVpVe （单独CPU）主板MSI B660M 迫击炮 DDR4不带wifi999（板U套装）u.jd.com/eMffaiw （板U）内..."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" data-persist="true"/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://uknowzheng.github.io/index.xml"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https://uknowzheng.github.io/Blogs/2022年双11、12黑苹果装机推荐(附EFI)-og-image.webp"/><meta property="og:image:url" content="https://uknowzheng.github.io/Blogs/2022年双11、12黑苹果装机推荐(附EFI)-og-image.webp"/><meta name="twitter:image" content="https://uknowzheng.github.io/Blogs/2022年双11、12黑苹果装机推荐(附EFI)-og-image.webp"/><meta property="og:image:type" content="image/.webp"/></head><body data-slug="Blogs/2022年双11、12黑苹果装机推荐(附EFI)"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">UknowZheng Blog</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="slide-button" data-cfg="{&quot;ratio&quot;:&quot;16:9&quot;,&quot;navigation&quot;:{&quot;scroll&quot;:false,&quot;touch&quot;:true,&quot;click&quot;:false},&quot;timer&quot;:{&quot;startOnChange&quot;:true,&quot;resetable&quot;:true,&quot;enabled&quot;:true},&quot;includePresenterNotes&quot;:true,&quot;tags&quot;:true,&quot;index&quot;:true,&quot;align&quot;:&quot;left&quot;}"><button class="slide-icon" aria-label="Slide Toggle"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 -960 960 960" fill="currentColor" xml:space="preserve"><path d="m380-300 280-180-280-180v360ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"></path></svg></button></div></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-0" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../Blogs/">Blogs</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>2022年双11、12黑苹果装机推荐(附EFI)</a></div></nav><h1 class="article-title">2022年双11、12黑苹果装机推荐(附EFI)</h1><p show-comma="true" class="content-meta"><time datetime="2026-04-24T00:00:00.000Z">Apr 24, 2026</time><span>24 min read</span></p></div></div><article class="popover-hint"><h2 id="efi链接"><a href="https://zhida.zhihu.com/search?content_id=217828914&amp;content_type=Article&amp;match_order=1&amp;q=EFI&amp;zhida_source=entity" class="external">EFI<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>链接：<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#efi链接" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><a href="https://link.zhihu.com/?target=https%3A//github.com/uknowzheng/Hackintosh-12490F-B660M-MORTAR-6600XT" class="external">https://github.com/uknowzheng/Hackintosh-12490F-B660M-MORTAR-6600XT<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<h2 id="最终成品">最终成品：<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#最终成品" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><img src="https://pic1.zhimg.com/v2-c8c0da6919b5a9bb318cd0ffae18808c_1440w.jpg" alt/></p>
+<p>完美黑苹果，WIFI 蓝牙 Airdorp 显卡 核心驱动 声卡均能够正常使用</p>
+<p><img src="https://pic2.zhimg.com/v2-755d36457cd321f13d1b13e0f8d8a5c5_1440w.jpg" alt/></p>
+<p>娱乐大师跑分娱乐一下</p>
+<p><img src="https://pic1.zhimg.com/v2-4a5154bdb9f087dbd90abe09e17b391c_1440w.jpg" alt/></p>
+<p>具体配置如图</p>
+<h3 id="背景">背景：<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#背景" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>很久就想组一部高性价比而且比较现代的台式机了，刚好遇到双11配件降价，于是购买了如下配件：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>部件</th><th>具体配置</th><th>价格</th><th>链接</th></tr></thead><tbody><tr><td>cpu</td><td>intel <a href="https://zhida.zhihu.com/search?content_id=217828914&amp;content_type=Article&amp;match_order=1&amp;q=i5-12490F&amp;zhida_source=entity" class="external">i5-12490F<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td><td>1299（板U套装）</td><td><a href="https://link.zhihu.com/?target=https%3A//u.jd.com/eMfVpVe" class="external">https://u.jd.com/eMfVpVe<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>  <br/>（单独CPU）</td></tr><tr><td>主板</td><td><a href="https://zhida.zhihu.com/search?content_id=217828914&amp;content_type=Article&amp;match_order=1&amp;q=MSI+B660M+%E8%BF%AB%E5%87%BB%E7%82%AE&amp;zhida_source=entity" class="external">MSI B660M 迫击炮<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> DDR4不带wifi</td><td>999（板U套装）</td><td><a href="https://link.zhihu.com/?target=https%3A//u.jd.com/eMffaiw" class="external">https://u.jd.com/eMffaiw<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> （板U）</td></tr><tr><td>内存</td><td><a href="https://zhida.zhihu.com/search?content_id=217828914&amp;content_type=Article&amp;match_order=1&amp;q=%E9%98%BF%E6%96%AF%E5%8A%A0%E7%89%B9%E5%BC%97%E9%9B%B7&amp;zhida_source=entity" class="external">阿斯加特弗雷<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>ddr4 3200MHz 16G x 2</td><td>529</td><td><a href="https://link.zhihu.com/?target=https%3A//u.jd.com/ewfWjJw" class="external">https://u.jd.com/ewfWjJw<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td></tr><tr><td>显卡</td><td><a href="https://zhida.zhihu.com/search?content_id=217828914&amp;content_type=Article&amp;match_order=1&amp;q=%E6%86%BE%E8%AE%AFRX6600XT%E7%BA%A2%E9%AD%94&amp;zhida_source=entity" class="external">憾讯RX6600XT红魔<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> 8G顶级旗舰卡（闲鱼箱说发票齐全1200收，自己更换硅脂散热垫）</td><td>1200</td><td>这个可以闲鱼自行购买，或者PDD一年包换。稳一点可以买新  <br/><a href="https://link.zhihu.com/?target=https%3A//u.jd.com/eIfcuAb" class="external">https://u.jd.com/eIfcuAb<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td></tr><tr><td>电源</td><td>振华 金牌 冰山金蝶HX550战斗版</td><td>389</td><td><a href="https://link.zhihu.com/?target=https%3A//u.jd.com/edf7JSs" class="external">https://u.jd.com/edf7JSs<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td></tr><tr><td>风扇</td><td>利民AR120R SE青春版 + 先马12cm风扇x2</td><td>72</td><td><a href="https://link.zhihu.com/?target=https%3A//u.jd.com/eMfUha5" class="external">https://u.jd.com/eMfUha5<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td></tr><tr><td>硬盘</td><td><a href="https://zhida.zhihu.com/search?content_id=217828914&amp;content_type=Article&amp;match_order=1&amp;q=%E5%BD%B1%E9%A9%B0+%E6%98%9F%E8%80%80X4+512G+M2+PCIE4&amp;zhida_source=entity" class="external">影驰 星耀X4 512G M2 PCIE4<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> x 2条</td><td>546（pdd 2条9.9折）</td><td><a href="https://link.zhihu.com/?target=https%3A//u.jd.com/eIfV7zB" class="external">https://u.jd.com/eIfV7zB<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td></tr><tr><td>机箱</td><td>先马平头哥M2 mini mATX机箱</td><td>89</td><td><a href="https://link.zhihu.com/?target=https%3A//u.jd.com/eKfN3n8" class="external">https://u.jd.com/eKfN3n8<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td></tr><tr><td>无线网卡</td><td><a href="https://zhida.zhihu.com/search?content_id=217828914&amp;content_type=Article&amp;match_order=1&amp;q=BCM94360CS2&amp;zhida_source=entity" class="external">BCM94360CS2<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> （双频wifi + 蓝牙4.0）</td><td>139</td><td><a href="https://link.zhihu.com/?target=https%3A//s.click.taobao.com/lK4ONPu" class="external">https://s.click.taobao.com/lK4ONPu<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td></tr></tbody></table></div>
+<p>整机成本大概在5262，基本1080P最高画质畅玩3A、视频剪辑、编码、完美黑苹果。</p>
+<p><img src="https://pica.zhimg.com/v2-299052b4fc6cfea9350d83891c610420_1440w.jpg" alt/></p>
+<p>上述是我前期预想的配置。装机的话建议还是从jd去购买，主要是当遇到不合适的可以7天上门无理由（配件到手后，箱子不要丢！箱子不要丢！箱子不要丢！至少存放个7天）。</p>
+<p>这次装机的过程中遇到许多问题，具体一一解答吧。遇到问题如下：</p>
+<ul>
+<li>黑苹果机器配件应该如何选型？</li>
+<li>12代不代K系列的CPU对应主板选择，以及内存频率搭配的问题（13代也存在同样的问题）？</li>
+<li>电源应该如何选，以及电源设计存在的问题？</li>
+<li>矿卡到手如何翻新改良，以及怎么去看散热好坏。</li>
+<li>跑3DMark，发现CPU时钟频率波动非常大，怎么解决。</li>
+</ul>
+<p>上述这些问题，让我系统的知道，新机器装好，怎么判断整机性能是否正常。并且也可以作为一个经验方法论交由各大DIY进行参考。</p>
+<h2 id="主机配件应该如何选型">主机配件应该如何选型：<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#主机配件应该如何选型" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>2022年了，如果组一个黑苹果机器应该如何选型：</p>
+<h3 id="cpu">CPU：<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#cpu" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>由于目前苹果官方对intel 酷睿cpu支持最新到10代过，所以几乎可以发现，10代之后的酷睿cpu全部都是只能通过仿冒10代酷睿cpu的手段进行安装。所以如果想完美黑苹果（cpu + 核显加速）那么建议直接考虑10代酷睿cpu。如果不介意黑苹果cpu仿冒并且追求高性能和性价比，牺牲核显加速（影响不大）。那么建议可以看看12代CPU，当然13代跟12代酷睿架构类似（大核心+小核心），所以都可以按照12代的方式来处理，当然12代性价比高一些。</p>
+<p>12代酷睿CPU中也分几种类型，比如大小核心（P核 + E核），或者是纯性能核（P核）。纯性能核心对win10兼容性更好，能够安装win10系统。对于如果上win11小伙伴，那么就应该考虑P+E大小核心架构，当然纯性能核心也可以，只是win11支持大小核调度，而win10不支持。</p>
+<p>上面引出一个大小核概念，目前黑苹果仿冒层面考虑，优先选择纯性能核（P核）。虽然黑苹果在网上有大神开发了专门的kext驱动支持了小核心E核调度，但是从稳定性上看，并不支持那么好（后续可能会改变，毕竟M1也是大小核心调度）。而且市面上大部分教程都是告诉你如果用了大小核心的CPU，那么你需要去BIOS中CPU设置去关闭E核心。所以13代CPU的话，那么最好的选择肯定是要屏蔽小核心，要么配置上对应Kext驱动。这里只介绍下12代酷睿CPU中，只有P核心的CPU（i5-12600开始往下，12代酷睿都只有大核心）。</p>
+<p><img src="https://pic1.zhimg.com/v2-245d24ebd8470a85c9ce4aa0cdad1910_1440w.jpg" alt/></p>
+<p>基于上面这个图，其实能得出来满足黑苹果条件的高性价比CPU如下（黑苹果不支持核显，所以选F系列性价比高）：</p>
+<ol>
+<li>i5 -12490F（官方黑盒无风扇中国特供版，i5-12400F 默频+3缓存升级版，价格跟12400F差不多）</li>
+<li>i5-12400F（官方蓝核，频率为2.5-4.4GHz，二级缓存7.5MB，三级缓存18MB）</li>
+<li>i3-12100F（官方蓝核，频率为3.3-4.3GHz，二级缓存5MB，三级缓存12MB）</li>
+</ol>
+<p>只玩游戏的话i3-12100F足够了，黑苹果建议i5起步，由于1和2两者性能差不多，1性价比更高一些，所以自然选择i5 -12490F了。</p>
+<h3 id="显卡篇">显卡篇：<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#显卡篇" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>黑苹果显卡如果在2022年进行选择的话，建议选择RX 6系 Navi 23显卡，比如：</p>
+<ul>
+<li>RX 6600（2K 30fps）</li>
+<li>RX 6600 XT（2K 60fps）</li>
+<li>RX 6800（4K 30fps）</li>
+<li>RX 6800 XT（4K 60fps）</li>
+<li>RX 6900 XT（4K 80fps）</li>
+</ul>
+<p>上述显卡从前到后均支持2K 置 4K 游戏需求。而且支持新的Mac图形库Metal（图形库类比于Win下的DX12）</p>
+<p><img src="https://picx.zhimg.com/v2-00ea6b8c07f6dffb8f53fecbbe6cb519_1440w.jpg" alt/></p>
+<p>如果预算不够，想赌一赌显卡，可以选择RX 5系 Navi 21 显卡，属于第二波矿潮卡片：</p>
+<ul>
+<li>Navi 21</li>
+<li>RX 5500 XT</li>
+<li>RX 5600</li>
+<li>RX 5600 XT</li>
+<li>RX 5700</li>
+<li>RX 5700 XT</li>
+</ul>
+<p>上述显卡从前到后均支持2K 置 4K 游戏需求，功耗比6系高一些。</p>
+<p>如果明确预算确实少，入手一张矿卡，可以到PDD选择如下显卡：</p>
+<ul>
+<li>RX590（非GME）</li>
+<li>RX580 2304SP（必须是满血）</li>
+</ul>
+<p>上述显卡从前到后均支持1080P 游戏需求，但这些老卡不支持新的Mac Metal API，日常使用的话也不是什么大问题，功耗高对电源至少500w起步。</p>
+<p>当然入手二手卡，建议回来要更换核心硅脂和显存散热垫，并做好足够测试，硅脂散热垫选择本文中会末尾有专门讲解。</p>
+<p>显卡到手必不可少要执行几步测试：</p>
+<ol>
+<li>GPUZ查看基本信息（确定BIOS基本信息）</li>
+<li>Funmark甜甜圈烤鸡（720P、1080P烤鸡15分钟看核心温度）</li>
+<li>鲁大师跑分（娱乐一下）</li>
+<li>3dMark跑分（测试显卡稳定性以及CPU稳定性、GPU核心温度和GPU结温温度）</li>
+</ol>
+<p><strong>这里要主要是第2步和第4步，因为第1步的坑在于显卡bios是可以通过A卡atiflash去改写bios实现超频开核等做法，所以xfx卡也可以刷成蓝宝石，显存颗粒与核心颗粒对得上就行（TechPowerUp了解一下）。第2步主要是为了看显卡核心的频率稳定性以及温度散热表现，另外如果出现花屏大概率是显存有问题，如果出现频率不稳定波动大，那么就是核心有问题建议退货处理。如果第2步正常，通过第4步，可以检验出显卡在日常游戏中的表现（CPU、GPC整体稳定性），另外还可以看到GPU核心温度(芯片周边温度)和GPU结温温度（芯片中心温度，也叫接口温度）是否差异过大（10度内温度好、20度内温度适中、30度散热差、超过30还是建议换硅脂），过大说明硅脂干了要换硅脂，不然GPU结温温度过高直接关机。测试过程通过AMD官方的驱动工具，Ctrl + Shirt + O可以调出监控面板，如下是温度不正常的表现。</strong></p>
+<p><img src="https://pic1.zhimg.com/v2-efd869c246ae7d87100b2d7c79f1dac0_1440w.jpg" alt/></p>
+<p>品牌选择，建议选择一线大厂（技嘉、华硕、微星、蓝宝石），不要选择XFX、讯景、兰迪 （亲测过，黑苹果引导直接黑屏，只能通过刷显卡vbios解决，但是很不稳定折腾）</p>
+<p>显卡硬件主要看这几个部分：</p>
+<ul>
+<li>显卡供电规格（具体看<a href="https://zhuanlan.zhihu.com/p/157891361" class="external">DDAA117：【硬核科普】第18期：简单聊聊主板供电相数怎么看<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> 显卡同理）</li>
+<li>显卡散热管数量（垃圾卡铝块散热，低端卡2管散热，中端卡4管散热，高端卡6管散热起步）</li>
+<li>显卡功耗对应的电源接口设计（一般按PCI-E 75W，一个6PIN 75W，一个8PIN 150W来算，采用单8PIN供电显卡可以负载为75+150=225W，主要看厂商设计的电源接口是否能够满载显卡核心要求的功耗）</li>
+</ul>
+<p>所以本文选择去闲鱼捡漏憾讯RX6600XT红魔8G显卡，在RX6600XT这个规格的卡中，算是顶级卡了，1200箱说到手，不亏。</p>
+<h3 id="主板篇">主板篇：<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#主板篇" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>主板由于我们选择的是12代CPU，所以基本能选择的芯片组只有H610、B660、Z690，差异如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>芯片组</th><th>CPU超频支持</th><th>内存超频支持</th></tr></thead><tbody><tr><td>H610</td><td>不支持</td><td>不支持</td></tr><tr><td>B660</td><td>不支持</td><td>支持</td></tr><tr><td>Z690</td><td>支持</td><td>支持</td></tr></tbody></table></div>
+<p>为了兼顾黑苹果，所以这里选择微星B660M迫击炮这个主板，原因如下：</p>
+<ul>
+<li><strong>微星bios 设置中支持D.T.M选项配置</strong>，大白话说就是一键黑苹果配置模式。然后自己关闭安全引导，就可以直接用了。</li>
+<li>微星迫击炮这个系列CPU供电用料确实也可以，有句话叫做遇事不决迫击炮。当然华硕的B660性价比跟微星差不多，售后会更好一点。</li>
+<li>买到手主板用料很厚实，沉甸甸的比较有分量</li>
+</ul>
+<p>当然上述微星可以换成华硕的B660 PLUS也没啥问题（黑苹果需要自己配置BIOS）。但是不要选择寨板（比如精粤这种），因为寨板在供电设计和电容配件材料上，质量会有些差。所以会导致cpu性能无法发挥极致。</p>
+<p><strong>内存篇：</strong></p>
+<p>内存这个篇幅，由于12代CPU支持DDR4和DDR5。从延迟的角度上看DDR4会比DDR5更低，玩游戏上会更好，但是从生产力层面，DDR5的高频对生产力工具如视频剪辑这种，大幅超过DDR4差不多40%，并且更省电。</p>
+<p>但是从价格层面，今年11月份DDR5虽然有所降价，价格依旧是DDR4的两倍左右。而且虽然CPU不区分D4D5，但是主板也区分。因为从内存电路设计上，D4和D5主板是有区别的。D5的内存电源管理是放在内存板上，不再由主板管理，而D4的内存电源管理是主板帮忙完成的。这也决定了主板的选择。当前从性价比高的角度考虑，D4也不是不能选择。</p>
+<p>具体内存选择可以看B站测评视频：</p>
+<p><a href="https://link.zhihu.com/?target=https%3A//www.bilibili.com/video/BV1584y1z7NS/%3Fis_story_h5%3Dfalse%26p%3D1%26share_from%3Dugc%26share_medium%3Diphone%26share_plat%3Dios%26share_session_id%3DC7D4FD1F-8D45-46E5-A6A8-5452DF68C872%26share_source%3DWEIXIN%26share_tag%3Ds_i%26timestamp%3D1668347783%26unique_k%3DJuuMgKN" class="external">把某东129~249价位所有内存买下来测试对比，一期视频教会你内存如何选择，到底谁才是内存之王？_哔哩哔哩_bilibili<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<p>只想说国产长鑫颗粒牛逼。</p>
+<p>基于上面这个视频，这里我从兼容性和性价比考虑选择的是阿斯加特 弗雷 DDR4 3200MHz的，特别注意的一点就是**12代酷睿系列不代K的型号，是不支持3600MHz DDR4内存选择的。因为12代酷睿不代K的CPU锁了SA电压，也就意味着，实际内存频率真上不到3600MHz（实际只有3400MHz，且看CPU体质），还会带来系统的不稳定，容易蓝屏死机，所以这里一定要选择3200MHz的内存。**内存到手上机可能出现2400MHz，这时候记得去主板开启内存XMP配置，才能正常到3200MHz，通俗地讲，XMP其实就是主板厂家为主板设计的内存超频方案，DDR4默认是2400MHz，开启后才能到3200MHz。（作者起初内存就买了3600HMz，后来走了京东7天无理由退货重新买新的，服务真好上门取件直接退货，以防买错）</p>
+<h3 id="电源篇">电源篇：<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#电源篇" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>电源的选择其实也比较讲究，好的电源配置显卡不会导致啸叫，而且稳定CPU内存电流延长使用寿命，最直接判断的方式就是1块钱1w。如果你发现1块钱能买到2w，可能你买到的是个定时炸弹。</p>
+<p>选择电源的原则：</p>
+<ul>
+<li><strong>1块钱1w</strong></li>
+<li>尽量金牌，功率500W利于扩展（金牌有整流，白牌电源负载高电流不稳定对于高端显卡来说会导致啸叫）</li>
+<li>显卡和CPU供电要单独2条或者3条8pin线从电源出来，不要1条8pin再分8pin（很多电源设计有这种问题）</li>
+<li>电容选择：日系电容 > 台湾电容 > 国产电容</li>
+</ul>
+<p>品牌选择：</p>
+<ul>
+<li>一线品牌海韵、振华。</li>
+<li>二线的话航嘉、长城、鑫谷、先马</li>
+</ul>
+<p>电源实际功率主要看12V输出，这个输出才是决定了你电源主要功率（CPU、显卡供电）：</p>
+<p><img src="https://pic3.zhimg.com/v2-2ac55ca81def5551b38b2e3d8c9df5f8_1440w.jpg" alt/></p>
+<p>如果这个功率不正常的话，那说明功率可能虚标，注意CPU和显卡的供电功率情况换对应电源。</p>
+<h3 id="m2固态硬盘">M2固态硬盘<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#m2固态硬盘" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>M2固态硬盘我选择的是：影驰 星耀X4 M2 512G，容量方面512G几乎也够用了，上到1T就没太大必要了。pdd的话275元 512G，两条还9.9折。两条512G下来才546块钱，而且还支持PCIE 4.0。本身主板迫击炮B660m就支持m2 pcie4.0，理论速度会比凯侠RC20 本身pcie3 速度会快一些，勉强算是个入门级的。</p>
+<p>买固态一来看颗粒，二来看主控。</p>
+<p>先说说主控，由于我是用来黑苹果，所以主控的要求是必须选择群联（PHISON）主控，这个主控目前黑苹果支持最友好，不要用自研的主控，不然黑苹果启动引导直接卡死跑码阶段。</p>
+<p><img src="https://pic4.zhimg.com/v2-5a6f58cc9f55eddce5419334b504203f_1440w.jpg" alt/></p>
+<p>然后闪存颗粒的话，类型从 SLC > MLC > TLC > QLC 往下排列，具体原因如下：<a href="https://zhuanlan.zhihu.com/p/530276428" class="external">存储印象：到底怎么选SSD，首先一定要懂闪存颗粒！<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> ，可以先看完这个文章再看什么颗粒适合自己。</p>
+<p><img src="https://pic4.zhimg.com/v2-5e1f0efdb03cdc6cf38c35e4f41fb181_1440w.jpg" alt/></p>
+<p>由于影驰 星耀X4 M2 512G使用的是TLC颗粒，然后加上用的是群联的主控，此外还支持PCIE4.0。这妥妥的性价比，275这个价格还要啥自行车。整体跑分还是狠入门的。</p>
+<p><img src="https://picx.zhimg.com/v2-52f1edcafdebb906cc403590919282dd_1440w.jpg" alt/></p>
+<h3 id="无线网卡篇">无线网卡篇：<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#无线网卡篇" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>黑苹果这里使用BCM94360CS2能够免驱，需要在Opencore中加入博通的驱动Kext。</p>
+<h3 id="cpu风扇机箱篇">CPU风扇&amp;机箱篇<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#cpu风扇机箱篇" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>机箱我选择的是：先马平头哥M2 mini mATX机箱，理由很简单双11只要89块钱，有钢化玻璃、USB3、电源下置、支持5个12cm风扇位置，要啥自行车。</p>
+<p>CPU风扇选择的是利民AR120R SE青春版ARGB，双11价格71到手后确实分量十足，塔式散热沉甸甸的个头很大，而且还送利民家的cpu硅脂，性价比高，压住12490F问题不大。</p>
+<h3 id="硅脂散热垫篇cpu显卡通用">硅脂&amp;散热垫篇（CPU&amp;显卡通用）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#硅脂散热垫篇cpu显卡通用" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>好的硅脂对核心散热帮助是非常的大，千万不要用那种PDD的10元一大罐的银硅脂，那种导热性可以说几乎没有。目前有两个比较适合推荐的品牌：霍尼韦尔7950相变片 &amp; 国产高导GD900 &amp; 信越7921 （本人用的是信越7921），因为市面上很多硅脂导热系数虚标，从目前实际上看还是信越7921靠谱很多，前提是得买到正品。追求性价比，国产高导也还行。</p>
+<p><img src="https://pic2.zhimg.com/v2-452ecce0418cd662c512a18f3864d569_1440w.jpg" alt/></p>
+<p>关于散热垫的选择，目前最优的选择是进口 莱尔德90000系列 > 莱尔德700系列 > 莱尔德300系列。针对显存或者M2固态这种散热的话，还是使用莱尔德700作为填充间隙的散热垫。</p>
+<p><img src="https://pica.zhimg.com/v2-e7a96fd1b7f04b0ccacd1e95a5d9802c_1440w.jpg" alt/></p>
+<p>由于本人收的是二手的RX6600XT，鉴于是从矿老板手中拿到手的卡，所以保险起见，还是要上下硅脂和散热垫，由于便宜的硅脂对显卡的散热是起不到任何帮助，还会因为核心温度过热，导致断电关机。如果显卡本身没这个机制还会导致核心烧毁。所以还是要上点靠谱的硅脂，这里使用的是莱尔德300系列散热垫以及信越7921，但是显卡安装好后，对散热还是觉得不太够，应该买莱尔德700系列，对于硅脂来说应该买霍尼韦尔7950相变片。</p>
+<p><img src="https://pica.zhimg.com/v2-b94905406fdf82dd4a356c650008089c_1440w.jpg" alt/></p>
+<p>不过总体来说，还是能够用，需要在AMD显卡管理中把风扇转速稍微调整下，感觉憾讯rx6600xt的vbios对风扇调教不是那么好，所以这里需要人为提高显卡风扇转速。以下是古墓丽影1080p最高画质下温度表现，整体还能玩，风扇声音也还是有的（等后续换新的散热硅脂和散热垫来解决了，当前温度和接头温度差了20度说明散热硅脂还是不够好，要是2K玩的话至少有35度差距了，但是好的就是还完硅脂后，显卡不会因为接头温度过高导致显卡自我保护，进而电脑断电关机）。</p>
+<p><img src="https://pic2.zhimg.com/v2-b2f5672e1e840e606b6454d9079eec87_1440w.jpg" alt/></p>
+<h3 id="另外建议把amd官方驱动工具的风扇转速自定义把风扇转速再调高一些使得散热更快">另外建议把AMD官方驱动工具的风扇转速自定义，把风扇转速再调高一些，使得散热更快<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#另外建议把amd官方驱动工具的风扇转速自定义把风扇转速再调高一些使得散热更快" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic2.zhimg.com/v2-254ee32f68ca17fe66cd799abf594de9_1440w.jpg" alt/></p>
+<h3 id="关于3dmark跑分不稳定的问题">关于3DMark跑分不稳定的问题<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#关于3dmark跑分不稳定的问题" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>电脑组装好之后，跑了下3dMark，发现了一些问题：</p>
+<p><img src="https://pic4.zhimg.com/v2-783e268b8337e26383bce3bd5bf853bf_1440w.jpg" alt/></p>
+<p>从图中可以发现显卡核心频率和内存频率还是比较稳定的，但是CPU频率波动特别大。跟周围一堆用了12代CPU的朋友以及贴吧上聊了一圈发现大家都有同样的问题。后来经过摸索，问题出在电源管理以及BIOS设置上。</p>
+<p>第一点，首先win上必须要在控制面板-电源管理里面把平衡模式改成高性能模式</p>
+<p>第二点，要进入到BIOS中禁用两个项目Intel SpeedStep 和 C-State (C1E) ，这两个是Intel引入的节能技术，会影响CPU性能完全释放导致游戏过程掉帧。</p>
+<p>优化后表现如下：</p>
+<p><img src="https://pica.zhimg.com/v2-9427e567af428b1a91bc1d8730b41476_1440w.jpg" alt/></p>
+<p><img src="https://pic4.zhimg.com/v2-c5051da509ed480021261c31d4096651_1440w.jpg" alt/></p>
+<p>这时候发现CPU的曲线，非常稳定了。当然这个模式下CPU肯定不节能，如果想省电的话，可以改回去。</p>
+<h3 id="总结">总结<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#总结" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>这次装机，整体收益良多，知道很多配件改如何选择，以及如何配置能够达到整体性能最大化。后续希望搞机的大佬们，多相互交流。后续我也会整理成视频发布到B站上面。</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-0" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#efi链接" data-for="efi链接">EFI链接：</a></li><li class="depth-0"><a href="#最终成品" data-for="最终成品">最终成品：</a></li><li class="depth-1"><a href="#背景" data-for="背景">背景：</a></li><li class="depth-0"><a href="#主机配件应该如何选型" data-for="主机配件应该如何选型">主机配件应该如何选型：</a></li><li class="depth-1"><a href="#cpu" data-for="cpu">CPU：</a></li><li class="depth-1"><a href="#显卡篇" data-for="显卡篇">显卡篇：</a></li><li class="depth-1"><a href="#主板篇" data-for="主板篇">主板篇：</a></li><li class="depth-1"><a href="#电源篇" data-for="电源篇">电源篇：</a></li><li class="depth-1"><a href="#m2固态硬盘" data-for="m2固态硬盘">M2固态硬盘</a></li><li class="depth-1"><a href="#无线网卡篇" data-for="无线网卡篇">无线网卡篇：</a></li><li class="depth-1"><a href="#cpu风扇机箱篇" data-for="cpu风扇机箱篇">CPU风扇&amp;机箱篇</a></li><li class="depth-1"><a href="#硅脂散热垫篇cpu显卡通用" data-for="硅脂散热垫篇cpu显卡通用">硅脂&amp;散热垫篇（CPU&amp;显卡通用）</a></li><li class="depth-1"><a href="#另外建议把amd官方驱动工具的风扇转速自定义把风扇转速再调高一些使得散热更快" data-for="另外建议把amd官方驱动工具的风扇转速自定义把风扇转速再调高一些使得散热更快">另外建议把AMD官方驱动工具的风扇转速自定义，把风扇转速再调高一些，使得散热更快</a></li><li class="depth-1"><a href="#关于3dmark跑分不稳定的问题" data-for="关于3dmark跑分不稳定的问题">关于3DMark跑分不稳定的问题</a></li><li class="depth-1"><a href="#总结" data-for="总结">总结</a></li><li class="overflow-end"></li></ul></div><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div></div><footer class><p>© 2026 UknowZheng</p><ul><li><a href="https://github.com/uknowzheng">GitHub</a></li></ul></footer></div></div></body><script type="application/javascript" data-persist="true">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module" data-persist="true">function E(a,e){if(!a)return;function t(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function n(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}a?.addEventListener("click",t),window.addCleanup(()=>a?.removeEventListener("click",t)),document.addEventListener("keydown",n),window.addCleanup(()=>document.removeEventListener("keydown",n))}function f(a){for(;a.firstChild;)a.removeChild(a.firstChild)}var m=class{constructor(e,t){this.container=e;this.content=t;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}container;content;isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),t=this.onMouseMove.bind(this),n=this.onMouseUp.bind(this),o=this.onTouchStart.bind(this),r=this.onTouchMove.bind(this),i=this.onTouchEnd.bind(this),s=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",t),document.addEventListener("mouseup",n),this.container.addEventListener("touchstart",o,{passive:!1}),document.addEventListener("touchmove",r,{passive:!1}),document.addEventListener("touchend",i),window.addEventListener("resize",s),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",t),()=>document.removeEventListener("mouseup",n),()=>this.container.removeEventListener("touchstart",o),()=>document.removeEventListener("touchmove",r),()=>document.removeEventListener("touchend",i),()=>window.removeEventListener("resize",s))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let t=this.createButton("+",()=>this.zoom(.1)),n=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(n),e.appendChild(o),e.appendChild(t),this.container.appendChild(e)}createButton(e,t){let n=document.createElement("button");return n.textContent=e,n.className="mermaid-control-button",n.addEventListener("click",t),window.addCleanup(()=>n.removeEventListener("click",t)),n}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}onTouchStart(e){if(e.touches.length!==1)return;this.isDragging=!0;let t=e.touches[0];this.startPan={x:t.clientX-this.currentPan.x,y:t.clientY-this.currentPan.y}}onTouchMove(e){if(!this.isDragging||e.touches.length!==1)return;e.preventDefault();let t=e.touches[0];this.currentPan={x:t.clientX-this.startPan.x,y:t.clientY-this.startPan.y},this.updateTransform()}onTouchEnd(){this.isDragging=!1}zoom(e){let t=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),n=this.content.getBoundingClientRect(),o=n.width/2,r=n.height/2,i=t-this.scale;this.currentPan.x-=o*i,this.currentPan.y-=r*i,this.scale=t,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){let t=this.content.querySelector("svg").getBoundingClientRect(),n=t.width/this.scale,o=t.height/this.scale;this.scale=1,this.currentPan={x:(this.container.clientWidth-n)/2,y:(this.container.clientHeight-o)/2},this.updateTransform()}},T=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],y;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;y||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let t=y.default,n=new WeakMap;for(let r of e)n.set(r,r.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let c=n.get(s);c&&(s.innerHTML=c)}let r=T.reduce((s,c)=>(s[c]=window.getComputedStyle(document.documentElement).getPropertyValue(c),s),{}),i=document.documentElement.getAttribute("saved-theme")==="dark";t.initialize({startOnLoad:!1,securityLevel:"loose",theme:i?"dark":"base",themeVariables:{fontFamily:r["--codeFont"],primaryColor:r["--light"],primaryTextColor:r["--darkgray"],primaryBorderColor:r["--tertiary"],lineColor:r["--darkgray"],secondaryColor:r["--secondary"],tertiaryColor:r["--tertiary"],clusterBkg:r["--light"],edgeLabelBackground:r["--highlight"]}}),await t.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let r=0;r<e.length;r++){let v=function(){let g=l.querySelector("#mermaid-space"),h=l.querySelector(".mermaid-content");if(!h)return;f(h);let w=i.querySelector("svg").cloneNode(!0);h.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new m(g,h)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},i=e[r],s=i.parentElement,c=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(c),L=c.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),E(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../postscript.js" type="module" data-persist="true"></script></html>

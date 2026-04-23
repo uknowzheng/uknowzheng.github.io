@@ -6,29 +6,65 @@
       <description>Last 10 notes on UknowZheng Blog</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>Mac开发环境搭建</title>
-    <link>https://uknowzheng.github.io/Blogs/Mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA</link>
-    <guid>https://uknowzheng.github.io/Blogs/Mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA</guid>
-    <description><![CDATA[ 背景 因为经常跳槽的缘故，所以经常要配置mac机器的开发机环境。所以打算整理下配置的流程，写一份工具教程。 新机环境初始化 新机到手的时候第一步，主要是要把Xcode Command Line Tools先安装好，因为一般新手一上来就会先安装Brew包管理器，但是过程会因为Xcode Command Line Tools没有安装，中断Brew安装。有时候Xcode Command Line Tools因为网络问题会中断，从而中断整个brew流程。这时候要可能要重新卸载brew再安装，为了确保流程通畅，我们需要先安装好Xcode Command Line Tools。 打开Commond + 空... ]]></description>
-    <pubDate>Wed, 22 Apr 2026 00:00:00 GMT</pubDate>
+    <title>2022年双11、12黑苹果装机推荐(附EFI)</title>
+    <link>https://uknowzheng.github.io/Blogs/2022%E5%B9%B4%E5%8F%8C11%E3%80%8112%E9%BB%91%E8%8B%B9%E6%9E%9C%E8%A3%85%E6%9C%BA%E6%8E%A8%E8%8D%90(%E9%99%84EFI)</link>
+    <guid>https://uknowzheng.github.io/Blogs/2022%E5%B9%B4%E5%8F%8C11%E3%80%8112%E9%BB%91%E8%8B%B9%E6%9E%9C%E8%A3%85%E6%9C%BA%E6%8E%A8%E8%8D%90(%E9%99%84EFI)</guid>
+    <description><![CDATA[ EFI链接： github.com/uknowzheng/Hackintosh-12490F-B660M-MORTAR-6600XT 最终成品： 完美黑苹果，WIFI 蓝牙 Airdorp 显卡 核心驱动 声卡均能够正常使用 娱乐大师跑分娱乐一下 具体配置如图 背景： 很久就想组一部高性价比而且比较现代的台式机了，刚好遇到双11配件降价，于是购买了如下配件： 部件具体配置价格链接cpuintel i5-12490F1299（板U套装）u.jd.com/eMfVpVe （单独CPU）主板MSI B660M 迫击炮 DDR4不带wifi999（板U套装）u.jd.com/eMffaiw （板U）内... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
   </item><item>
-    <title>小程序架构升级Harness工程化实践</title>
-    <link>https://uknowzheng.github.io/Blogs/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84%E5%8D%87%E7%BA%A7Harness%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E8%B7%B5</link>
-    <guid>https://uknowzheng.github.io/Blogs/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84%E5%8D%87%E7%BA%A7Harness%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E8%B7%B5</guid>
-    <description><![CDATA[ 1. ]]></description>
-    <pubDate>Wed, 15 Apr 2026 00:00:00 GMT</pubDate>
+    <title>Chrome Dev Tool定位问题</title>
+    <link>https://uknowzheng.github.io/Blogs/Chrome-Dev-Tool%E5%AE%9A%E4%BD%8D%E9%97%AE%E9%A2%98</link>
+    <guid>https://uknowzheng.github.io/Blogs/Chrome-Dev-Tool%E5%AE%9A%E4%BD%8D%E9%97%AE%E9%A2%98</guid>
+    <description><![CDATA[ 查询资源整理耗时情况 第一个是 Queuing，也就是排队的意思，当浏览器发起一个请求的时候，会有很多原因导致该请求不能被立即执行，而是需要排队等待。导致请求处于排队状态的原因有很多。首先，页面中的资源是有优先级的，比如 CSS、HTML、JavaScript 等都是页面中的核心文件，所以优先级最高；而图片、视频、音频这类资源就不是核心资源，优先级就比较低。通常当后者遇到前者时，就需要“让路”，进入待排队状态。 其次，我们前面也提到过，浏览器会为每个域名最多维护 6 个 TCP 连接，如果发起一个HTTP 请求时，这 6 个 TCP 连接都处于忙碌状态，那么这个请求就会处于排队状态。最后，网络... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
   </item><item>
-    <title>欢迎</title>
-    <link>https://uknowzheng.github.io/</link>
-    <guid>https://uknowzheng.github.io/</guid>
-    <description><![CDATA[ 欢迎来到 UknowZheng Blog 这里是知识库分享博客。. ]]></description>
-    <pubDate>Mon, 13 Apr 2026 16:26:21 GMT</pubDate>
+    <title>Echart架构解析</title>
+    <link>https://uknowzheng.github.io/Blogs/Echart%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90</link>
+    <guid>https://uknowzheng.github.io/Blogs/Echart%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90</guid>
+    <description><![CDATA[ 前言 本文章主要介绍EChart整体的架构设计，以及源码中关键的代码部分，用于简单对EChart的设计以及工作概念有个简单的入门理解，所以不会讲到太深入源码地方，帮助想了解EChart的同学入门。 Echart架构图 Echart底层依赖矢量图形库ZRender，基于ZRender之上做了更高层次的抽象，定义出了以下三种元素： Series Coordinates Components 整体构成了下述的图表： 基石：ZRender GitHub - ecomfe/zrender: A lightweight graphic library providing 2d draw for Apach... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
   </item><item>
-    <title>Karpathy-Obsidian笔记法</title>
-    <link>https://uknowzheng.github.io/Blogs/Karpathy-Obsidian%E7%AC%94%E8%AE%B0%E6%B3%95</link>
-    <guid>https://uknowzheng.github.io/Blogs/Karpathy-Obsidian%E7%AC%94%E8%AE%B0%E6%B3%95</guid>
-    <description><![CDATA[ Karpathy 的 Obsidian 笔记法 来自 AI 领域知名研究者 Andrej Karpathy 的个人知识管理实践 核心哲学 Karpathy 的方法论核心是快速记录、持续整理、网络化链接。他不追求笔记的完美，而是在信息的流动中不断迭代和深化。 Seed → Refine → Connect → Output 四阶段工作流 1. ]]></description>
-    <pubDate>Mon, 13 Apr 2026 00:00:00 GMT</pubDate>
+    <title>Git代码工作流</title>
+    <link>https://uknowzheng.github.io/Blogs/Git%E4%BB%A3%E7%A0%81%E5%B7%A5%E4%BD%9C%E6%B5%81</link>
+    <guid>https://uknowzheng.github.io/Blogs/Git%E4%BB%A3%E7%A0%81%E5%B7%A5%E4%BD%9C%E6%B5%81</guid>
+    <description><![CDATA[ 序言 随着Devops的发展，代码版本管理成为持续集成阶段必不可少的工作。Git 作为代码托管系统，不可避免涉及到多人协作。多人协作必然会诞生一些工作流程，让大家能够在编码过程中进行良好的协作，使得项目仅仅有条的运作下去。这里的工作流程，在标准的英文叫法上称之为“workflow”，当然有的地方会称为分支模式，这里统一叫做工作流。工作流类似于水流，会有分叉、汇聚。本人因为在阿里华为也做过一段时间，也总结了这两家公司对Devops实践的经验。所以来讲讲工作流这个事情。 接下来会结合业界对Git工作流程实践进行详细介绍，会介绍以下几种工作流。 TBD(Trunk Based Development... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Git实用小技巧指北</title>
+    <link>https://uknowzheng.github.io/Blogs/Git%E5%AE%9E%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%E6%8C%87%E5%8C%97</link>
+    <guid>https://uknowzheng.github.io/Blogs/Git%E5%AE%9E%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%E6%8C%87%E5%8C%97</guid>
+    <description><![CDATA[ 日常Git代码回滚操作技巧 # git提供了git reset 以及 git revert两种命令 # 在使用git reset命令前，先了解一个概念：HEAD，HEAD 是当前分支引用的指针，它总是指向该分支上的最后一次提交（你代码没commit那就只是在暂存区）。 # 回到具体的某一次提交 git reset --hard &lt;commit_id&gt; # 回到具体的上一次提交 git reset --hard HEAD^ # 当你如果merge遇到冲突，其实git也是临时拉的分支做冲突合并，你也可以通过 # 如果要强行同步到远程分支，那么上述命令可以配合以下命令使用（看清楚场景，不... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>JS设计模式和重构方法</title>
+    <link>https://uknowzheng.github.io/Blogs/JS%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%92%8C%E9%87%8D%E6%9E%84%E6%96%B9%E6%B3%95</link>
+    <guid>https://uknowzheng.github.io/Blogs/JS%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%92%8C%E9%87%8D%E6%9E%84%E6%96%B9%E6%B3%95</guid>
+    <description><![CDATA[ 背景 为什么突然想写前端编码中的设计模式呢？国庆期间自己思考了下设计模式在日常开发中的用法以及代码重构的技巧。于是乎整理了下这篇文章跟大家分享下前端这块的设计模式以及一些代码重构的思路。设计模式的玄学还是得在很多个项目中去实战总结思考才能领悟到。 设计模式 设计模式是大家日常开发中面向对象比较长谈的代码结构的设计方式，主要规范了我们平时开发过程中的代码设计原则，这里列举下比较重要的几个原则： 开闭原则(OCP)：对于组件功能的扩展是开放的,对于原有代码的修改是封闭的。 单一职责原则(SRP)：一个类只负责一项职责。 里氏替换原则(LSP)：子类可以扩展父类的功能，但不能改变父类原有的功能。 依... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>JavaScript语言术语解释</title>
+    <link>https://uknowzheng.github.io/Blogs/JavaScript%E8%AF%AD%E8%A8%80%E6%9C%AF%E8%AF%AD%E8%A7%A3%E9%87%8A</link>
+    <guid>https://uknowzheng.github.io/Blogs/JavaScript%E8%AF%AD%E8%A8%80%E6%9C%AF%E8%AF%AD%E8%A7%A3%E9%87%8A</guid>
+    <description><![CDATA[ 执行上下文 JS有个执行栈概念，专门执行js执行上下文 上下文分类 执行上下文分全局上下文跟函数上下文两种 JS执行上下文中的组成结构 变量环境：初始化var声明和函数声明都会变量提升存放到这里，并且初始化为未定义，可以直接访问。 语法环境：主要用于存放let和const声明的变量，类似小型的栈结构用于存放块级作用域变量，在变量声明到变量初始化的过程存在临时死区，不允许被访问。 可执行代码部分：除声明以外的代码逻辑，在执行的时候会变编译器优化提高执行效率。（JIT即时编译器技术） Outer上下文：一般指向声明代码（声明函数）层面，当时所处的上下文。比如我在代码书写上，全局上下文声明定义函数，... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Viewport理解和学习</title>
+    <link>https://uknowzheng.github.io/Blogs/Viewport%E7%90%86%E8%A7%A3%E5%92%8C%E5%AD%A6%E4%B9%A0</link>
+    <guid>https://uknowzheng.github.io/Blogs/Viewport%E7%90%86%E8%A7%A3%E5%92%8C%E5%AD%A6%E4%B9%A0</guid>
+    <description><![CDATA[ 1.ViewPort的概念和背景 （1）ViewPort背景 讲移动端的H5开发的时候，首先我们得了解Viewport这个概念。先从背景讲起，早期的很多网站都是专门针对PC显示器浏览而设计的，反而很少考虑多去适应手机的屏幕。随着手机移动端的普及，用手机去浏览大多数网站的时候就会出现问题（当年web页面都是宽屏的，差不多是按1024px宽度去设计的）。固定宽度的页面，在手机上预览就会出现横向竖向滚动条。为了能够在手机上获得更好的网页浏览体验，Apple提出了一个办法。在IOS手机的Safari浏览器定义Viewport meta标签，该标签的意义是告诉Safari浏览器创建一个虚拟窗口(View... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Web 安全</title>
+    <link>https://uknowzheng.github.io/Blogs/Web-%E5%AE%89%E5%85%A8</link>
+    <guid>https://uknowzheng.github.io/Blogs/Web-%E5%AE%89%E5%85%A8</guid>
+    <description><![CDATA[ Web 页面安全 同源策略（Same-origin policy） 如果两个 URL 的协议、域名和端口都相同，我们就称这两个 URL 同源。比如下面这两个URL，它们具有相同的协议 HTTPS、相同的域名 time.geekbang.org，以及相同的端口443，所以我们就说这两个 URL 是同源的。 浏览器默认两个相同的源之间是可以相互访问资源和操作 DOM 的。两个不同的源之间若想要相互访问资源或者操作 DOM，那么会有一套基础的安全策略的制约，我们把这称为同源策略。 同源策略主要表现在 DOM、Web 数据和网络这三个层面。 DOM 层面：同源策略限制了来自不同源的 JavaScrip... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>vscode配合3 way merge</title>
+    <link>https://uknowzheng.github.io/Blogs/vscode%E9%85%8D%E5%90%883-way-merge</link>
+    <guid>https://uknowzheng.github.io/Blogs/vscode%E9%85%8D%E5%90%883-way-merge</guid>
+    <description><![CDATA[ 因为传统的编辑器是不具备代码冲突处理的逻辑的，而且git默认也是可以指定当冲突发生的时候去指定mergetool对代码冲突进行处理，默认是2 way merge的这种方式（这种方式很难看出代码整体结构差异，会发生遗漏代码的情况） 为什么需要3 way merge？因为传统的merge其实是一种2 way merge的形式，这种方式merge最直观的表现如下： 相对于2 way merge来说3 way merge会更加直观一些，比如： jetbrain全家桶ide基本集成了自家的mergetool且支持3 way merge，这种是webstorm在你进行分支合并的时候，底层默认使用了git ... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
   </item>
     </channel>
   </rss>

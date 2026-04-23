@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>JS设计模式和重构方法</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Inter:ital,wght@0,400;0,600;1,400;1,600&amp;family=JetBrains Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="UknowZheng Blog"/><meta property="og:title" content="JS设计模式和重构方法"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="JS设计模式和重构方法"/><meta name="twitter:description" content="背景 为什么突然想写前端编码中的设计模式呢？国庆期间自己思考了下设计模式在日常开发中的用法以及代码重构的技巧。于是乎整理了下这篇文章跟大家分享下前端这块的设计模式以及一些代码重构的思路。设计模式的玄学还是得在很多个项目中去实战总结思考才能领悟到。 设计模式 设计模式是大家日常开发中面向对象比较长谈的代码结构的设计方式，主要规范了我们平时开发过程中的代码设计原则，这里列举下比较重要的几个原则： 开闭原则(OCP)：对于组件功能的扩展是开放的,对于原有代码的修改是封闭的。 单一职责原则(SRP)：一个类只负责一项职责。 里氏替换原则(LSP)：子类可以扩展父类的功能，但不能改变父类原有的功能。 依..."/><meta property="og:description" content="背景 为什么突然想写前端编码中的设计模式呢？国庆期间自己思考了下设计模式在日常开发中的用法以及代码重构的技巧。于是乎整理了下这篇文章跟大家分享下前端这块的设计模式以及一些代码重构的思路。设计模式的玄学还是得在很多个项目中去实战总结思考才能领悟到。 设计模式 设计模式是大家日常开发中面向对象比较长谈的代码结构的设计方式，主要规范了我们平时开发过程中的代码设计原则，这里列举下比较重要的几个原则： 开闭原则(OCP)：对于组件功能的扩展是开放的,对于原有代码的修改是封闭的。 单一职责原则(SRP)：一个类只负责一项职责。 里氏替换原则(LSP)：子类可以扩展父类的功能，但不能改变父类原有的功能。 依..."/><meta property="og:image:alt" content="背景 为什么突然想写前端编码中的设计模式呢？国庆期间自己思考了下设计模式在日常开发中的用法以及代码重构的技巧。于是乎整理了下这篇文章跟大家分享下前端这块的设计模式以及一些代码重构的思路。设计模式的玄学还是得在很多个项目中去实战总结思考才能领悟到。 设计模式 设计模式是大家日常开发中面向对象比较长谈的代码结构的设计方式，主要规范了我们平时开发过程中的代码设计原则，这里列举下比较重要的几个原则： 开闭原则(OCP)：对于组件功能的扩展是开放的,对于原有代码的修改是封闭的。 单一职责原则(SRP)：一个类只负责一项职责。 里氏替换原则(LSP)：子类可以扩展父类的功能，但不能改变父类原有的功能。 依..."/><meta property="twitter:domain" content="uknowzheng.github.io"/><meta property="og:url" content="https://uknowzheng.github.io/Blogs/JS设计模式和重构方法"/><meta property="twitter:url" content="https://uknowzheng.github.io/Blogs/JS设计模式和重构方法"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="背景 为什么突然想写前端编码中的设计模式呢？国庆期间自己思考了下设计模式在日常开发中的用法以及代码重构的技巧。于是乎整理了下这篇文章跟大家分享下前端这块的设计模式以及一些代码重构的思路。设计模式的玄学还是得在很多个项目中去实战总结思考才能领悟到。 设计模式 设计模式是大家日常开发中面向对象比较长谈的代码结构的设计方式，主要规范了我们平时开发过程中的代码设计原则，这里列举下比较重要的几个原则： 开闭原则(OCP)：对于组件功能的扩展是开放的,对于原有代码的修改是封闭的。 单一职责原则(SRP)：一个类只负责一项职责。 里氏替换原则(LSP)：子类可以扩展父类的功能，但不能改变父类原有的功能。 依..."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" data-persist="true"/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1lcm1haWQuaW5saW5lLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUdGO0VBQ0U7OztBQUtGO0VBQ0U7RUFDQTs7O0FBSUo7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTtFQUNBOztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFOztBQUlGO0VBQ0U7RUFDQTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLmV4cGFuZC1idXR0b24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsb2F0OiByaWdodDtcbiAgcGFkZGluZzogMC40cmVtO1xuICBtYXJnaW46IDAuM3JlbTtcbiAgcmlnaHQ6IDA7IC8vIE5PVEU6IHJpZ2h0IHdpbGwgYmUgc2V0IGluIG1lcm1haWQuaW5saW5lLnRzXG4gIGNvbG9yOiB2YXIoLS1ncmF5KTtcbiAgYm9yZGVyLWNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tbGlnaHQpO1xuICBib3JkZXI6IDFweCBzb2xpZDtcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xuICBvcGFjaXR5OiAwO1xuICB0cmFuc2l0aW9uOiAwLjJzO1xuXG4gICYgPiBzdmcge1xuICAgIGZpbGw6IHZhcigtLWxpZ2h0KTtcbiAgICBmaWx0ZXI6IGNvbnRyYXN0KDAuMyk7XG4gIH1cblxuICAmOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLWNvbG9yOiB2YXIoLS1zZWNvbmRhcnkpO1xuICB9XG5cbiAgJjpmb2N1cyB7XG4gICAgb3V0bGluZTogMDtcbiAgfVxufVxuXG5wcmUge1xuICAmOmhvdmVyID4gLmV4cGFuZC1idXR0b24ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNpdGlvbjogMC4ycztcbiAgfVxufVxuXG4jbWVybWFpZC1jb250YWluZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGNvbnRhaW46IGxheW91dDtcbiAgei1pbmRleDogOTk5O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHdpZHRoOiAxMDB2dztcbiAgaGVpZ2h0OiAxMDB2aDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgZGlzcGxheTogbm9uZTtcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcblxuICAmLmFjdGl2ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB9XG5cbiAgJiA+ICNtZXJtYWlkLXNwYWNlIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XG4gICAgcG9zaXRpb246IGZpeGVkO1xuICAgIHRvcDogNTAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcbiAgICBoZWlnaHQ6IDgwdmg7XG4gICAgd2lkdGg6IDgwdnc7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcblxuICAgICYgPiAubWVybWFpZC1jb250ZW50IHtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIHRyYW5zZm9ybS1vcmlnaW46IDAgMDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjFzIGVhc2U7XG4gICAgICBvdmVyZmxvdzogdmlzaWJsZTtcbiAgICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xuICAgICAgbWluLXdpZHRoOiAyMDBweDtcblxuICAgICAgcHJlIHtcbiAgICAgICAgbWFyZ2luOiAwO1xuICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICB9XG5cbiAgICAgIHN2ZyB7XG4gICAgICAgIG1heC13aWR0aDogbm9uZTtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgICYgPiAubWVybWFpZC1jb250cm9scyB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBib3R0b206IDIwcHg7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBnYXA6IDhweDtcbiAgICAgIHBhZGRpbmc6IDhweDtcbiAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICBib3JkZXItcmFkaXVzOiA2cHg7XG4gICAgICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xuICAgICAgei1pbmRleDogMjtcblxuICAgICAgLm1lcm1haWQtY29udHJvbC1idXR0b24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgd2lkdGg6IDMycHg7XG4gICAgICAgIGhlaWdodDogMzJweDtcbiAgICAgICAgcGFkZGluZzogMDtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgICBjb2xvcjogdmFyKC0tZGFyayk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtZmFtaWx5OiB2YXIoLS1ib2R5Rm9udCk7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG5cbiAgICAgICAgJjpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgICAgfVxuXG4gICAgICAgICY6YWN0aXZlIHtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMXB4KTtcbiAgICAgICAgfVxuXG4gICAgICAgIC8vIFN0eWxlIHRoZSByZXNldCBidXR0b24gZGlmZmVyZW50bHlcbiAgICAgICAgJjpudGgtY2hpbGQoMikge1xuICAgICAgICAgIHdpZHRoOiBhdXRvO1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTJweDtcbiAgICAgICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cbiJdfQ== */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://uknowzheng.github.io/index.xml"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https://uknowzheng.github.io/Blogs/JS设计模式和重构方法-og-image.webp"/><meta property="og:image:url" content="https://uknowzheng.github.io/Blogs/JS设计模式和重构方法-og-image.webp"/><meta name="twitter:image" content="https://uknowzheng.github.io/Blogs/JS设计模式和重构方法-og-image.webp"/><meta property="og:image:type" content="image/.webp"/></head><body data-slug="Blogs/JS设计模式和重构方法"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">UknowZheng Blog</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="slide-button" data-cfg="{&quot;ratio&quot;:&quot;16:9&quot;,&quot;navigation&quot;:{&quot;scroll&quot;:false,&quot;touch&quot;:true,&quot;click&quot;:false},&quot;timer&quot;:{&quot;startOnChange&quot;:true,&quot;resetable&quot;:true,&quot;enabled&quot;:true},&quot;includePresenterNotes&quot;:true,&quot;tags&quot;:true,&quot;index&quot;:true,&quot;align&quot;:&quot;left&quot;}"><button class="slide-icon" aria-label="Slide Toggle"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 -960 960 960" fill="currentColor" xml:space="preserve"><path d="m380-300 280-180-280-180v360ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"></path></svg></button></div></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-12"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-12" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../Blogs/">Blogs</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>JS设计模式和重构方法</a></div></nav><h1 class="article-title">JS设计模式和重构方法</h1><p show-comma="true" class="content-meta"><time datetime="2026-04-24T00:00:00.000Z">Apr 24, 2026</time><span>32 min read</span></p></div></div><article class="popover-hint"><h3 id="背景">背景<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#背景" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>为什么突然想写<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E5%89%8D%E7%AB%AF%E7%BC%96%E7%A0%81&amp;zhida_source=entity" class="external">前端编码<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>中的设计模式呢？国庆期间自己思考了下设计模式在日常开发中的用法以及<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84&amp;zhida_source=entity" class="external">代码重构<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>的技巧。于是乎整理了下这篇文章跟大家分享下前端这块的设计模式以及一些代码重构的思路。设计模式的玄学还是得在很多个项目中去实战总结思考才能领悟到。</p>
+<h3 id="设计模式">设计模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#设计模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>设计模式是大家日常开发中面向对象比较长谈的代码结构的设计方式，主要规范了我们平时开发过程中的代码设计原则，这里列举下比较重要的几个原则：</p>
+<ul>
+<li><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99&amp;zhida_source=entity" class="external">开闭原则<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>(OCP)：对于组件功能的扩展是开放的,对于原有代码的修改是封闭的。</li>
+<li><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99&amp;zhida_source=entity" class="external">单一职责原则<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>(SRP)：一个类只负责一项职责。</li>
+<li><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99&amp;zhida_source=entity" class="external">里氏替换原则<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>(LSP)：子类可以扩展父类的功能，但不能改变父类原有的功能。</li>
+<li><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99&amp;zhida_source=entity" class="external">依赖倒置原则<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>(DIP)：面向接口编程，不针对实现编程。</li>
+<li><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99&amp;zhida_source=entity" class="external">接口隔离原则<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>(ISP)：每一个接口都应该承担相对独立的角色。</li>
+<li>最少知识原则(LoD)：降低系统耦合，使类与类之间的结构松散。</li>
+</ul>
+<p>正常看了这么多原则，没写过大量业务项目代码的话，真的是比较难理解这些思想，当然作为从Java转到Javascript这块坑的我最大的感受是从约束很严格的语言转到一门非常灵活的语言上。但是设计模式的思想还是通用的，依旧能够借助其思想去解决业务设计上的一些问题。</p>
+<h3 id="常见的设计模式">常见的设计模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#常见的设计模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>一般常见的设计模式有如下24中类：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>创建型</th><th>结构型</th><th>行为型</th></tr></thead><tbody><tr><td>单例模式</td><td>代理模式</td><td>迭代器模式</td></tr><tr><td><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">抽象工厂模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td><td>组合模式</td><td>模版方法模式</td></tr><tr><td>简单工厂模式</td><td>适配器模式</td><td>访问者模式</td></tr><tr><td><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">工厂方法模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td><td>桥接模式</td><td>解释器模式</td></tr><tr><td>构建器模式</td><td>装饰器模式</td><td>责任链模式</td></tr><tr><td>原型模式</td><td>外观模式</td><td>备案录模式</td></tr><tr><td></td><td>享元模式</td><td>中介者模式</td></tr><tr><td></td><td></td><td>状态模式</td></tr><tr><td></td><td></td><td>命令模式</td></tr><tr><td></td><td></td><td>策略模式</td></tr><tr><td></td><td></td><td>观察者模式</td></tr><tr><td></td><td></td><td></td></tr></tbody></table></div>
+<p>下面我会用ES6来编写这几种设计模式：</p>
+<h3 id="创建型模式">创建型模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#创建型模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h3 id="单例模式模式">单例模式模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#单例模式模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pica.zhimg.com/v2-ef30062302ca94d63c0244d35aedc774_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Singleton {</span></span>
+<span data-line><span>    static getInstance() {</span></span>
+<span data-line><span>        if (!Singleton.instance) {</span></span>
+<span data-line><span>            Singleton.instance = new Singleton();</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>        return Singleton.instance;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    method(){</span></span>
+<span data-line><span>        console.log(&quot;hello world!&quot;);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>let obj = Singleton.getInstance();</span></span></code></pre></figure>
+<h3 id="简单工厂模式">简单工厂模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#简单工厂模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Car {</span></span>
+<span data-line><span>    constructor(options) {</span></span>
+<span data-line><span>        options = options || &quot;&quot;;</span></span>
+<span data-line><span>        this.doors = options.doors || 4;</span></span>
+<span data-line><span>        this.state = options.state || &quot;brand new&quot;;</span></span>
+<span data-line><span>        this.color = options.color || &quot;silver&quot;;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class CarFactory {</span></span>
+<span data-line><span>    createCar(options) {</span></span>
+<span data-line><span>        return new Car(options);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>const carFactory = new CarFactory();</span></span>
+<span data-line><span>const car = carFactory.createCar({</span></span>
+<span data-line><span>    objType: &quot;car&quot;,</span></span>
+<span data-line><span>    color: &quot;yellow&quot;,</span></span>
+<span data-line><span>    doors: 4</span></span>
+<span data-line><span>});</span></span></code></pre></figure>
+<h3 id="工厂方法模式">工厂方法模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#工厂方法模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic1.zhimg.com/v2-0c79982058818f182d73ca9405ff7c26_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Car {</span></span>
+<span data-line><span>    constructor(options) {</span></span>
+<span data-line><span>        this.doors = options.doors || 4;</span></span>
+<span data-line><span>        this.state = options.state || &quot;brand new&quot;;</span></span>
+<span data-line><span>        this.color = options.color || &quot;silver&quot;;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class BigCar extends Car {</span></span>
+<span data-line><span>    constructor(options) {</span></span>
+<span data-line><span>        super(options);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class SmallCar extends Car {</span></span>
+<span data-line><span>    constructor(options) {</span></span>
+<span data-line><span>        super(options);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class ObjectFactory {</span></span>
+<span data-line><span>    constructor(Class) {</span></span>
+<span data-line><span>        this.objClass = Class;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    createObj(options) {</span></span>
+<span data-line><span>        return new this.objClass(options);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class BigCarFactory extends ObjectFactory{</span></span>
+<span data-line><span>    constructor() {</span></span>
+<span data-line><span>        super(BigCar);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class SmallCarFactory extends ObjectFactory{</span></span>
+<span data-line><span>    constructor() {</span></span>
+<span data-line><span>        super(SmallCar);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>//usage </span></span>
+<span data-line><span>const bigCarFactory = new BigCarFactory();</span></span>
+<span data-line><span>const bigCarObj = bigCarFactory.createObj({</span></span>
+<span data-line><span>    color: &quot;yellow&quot;,</span></span>
+<span data-line><span>    doors: 6</span></span>
+<span data-line><span>});</span></span>
+<span data-line> </span>
+<span data-line><span>const smallCarFactory = new SmallCarFactory();</span></span>
+<span data-line><span>const smallCarObj = smallCarFactory.createObj({</span></span>
+<span data-line><span>    color: &quot;blue&quot;,</span></span>
+<span data-line><span>    doors: 4</span></span>
+<span data-line><span>});</span></span></code></pre></figure>
+<h3 id="抽象工厂模式">抽象工厂模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#抽象工厂模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic1.zhimg.com/v2-5a954badd0a1b3e1f8d1753b38f71f88_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Car {}</span></span>
+<span data-line><span>class BigCar extends Car{}</span></span>
+<span data-line><span>class SmallCar extends Car{}</span></span>
+<span data-line><span>class Bike {}</span></span>
+<span data-line><span>class BigBike extends Bike{}</span></span>
+<span data-line><span>class SmallBike extends Bike{}</span></span>
+<span data-line> </span>
+<span data-line><span>class Factory {</span></span>
+<span data-line><span>    getCar(){</span></span>
+<span data-line><span>        throw new Error('子类实现')</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>     getBike(){</span></span>
+<span data-line><span>        throw new Error('子类实现')</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class BigFactory extends Factory {</span></span>
+<span data-line><span>    getCar(){</span></span>
+<span data-line><span>        return new BigCar();</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    getBike(){</span></span>
+<span data-line><span>        return new BigBike();</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class SmallFactory extends Factory {</span></span>
+<span data-line><span>    getCar(){</span></span>
+<span data-line><span>        return new SmallCar();</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    getBike(){</span></span>
+<span data-line><span>        return new SmallBike();</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>//usage </span></span>
+<span data-line><span>const bigFactory = new BigFactory();</span></span>
+<span data-line><span>const bigcar = bigFactory.getCar();</span></span>
+<span data-line><span>const bigbike = bigFactory.getBike();</span></span>
+<span data-line> </span>
+<span data-line><span>const smallFactory = new SmallFactory();</span></span>
+<span data-line><span>const smallcar = smallFactory.getCar();</span></span>
+<span data-line><span>const smallbike = smallFactory.getBike();</span></span></code></pre></figure>
+<h3 id="构建器模式">构建器模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#构建器模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic4.zhimg.com/v2-cca0c1631d6a58a2aaf9026f408d5945_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class CarBuilder {</span></span>
+<span data-line><span>  constructor() {</span></span>
+<span data-line><span>    this.engine = '';</span></span>
+<span data-line><span>    this.tyre = '';</span></span>
+<span data-line><span>    this.logo = '';</span></span>
+<span data-line><span>    Object.keys(this).forEach(key => {</span></span>
+<span data-line><span>        //把每个属性名第一个字母大写并拼入set,构成setXXX</span></span>
+<span data-line><span>      const setFuncName =  `set${key.substring(0,1).toUpperCase()}${key.substring(1)}`;</span></span>
+<span data-line><span>      this[setFuncName] = value => {</span></span>
+<span data-line><span>        this[key] = value;</span></span>
+<span data-line><span>        return this;</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>    })</span></span>
+<span data-line><span>  }</span></span>
+<span data-line> </span>
+<span data-line><span>  //调用建造者</span></span>
+<span data-line><span>  build() {</span></span>
+<span data-line><span>    //取出所有属性非方法</span></span>
+<span data-line><span>    const keysNoFunc = Object.keys(this).filter(key => typeof this[key] !== 'function');</span></span>
+<span data-line><span>    return keysNoWithers.reduce((returnValue, key) => {</span></span>
+<span data-line><span>      return {</span></span>
+<span data-line><span>        ...returnValue,</span></span>
+<span data-line><span>        [key]: this[key]</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>    }, {});</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>const car = new CarBuilder()</span></span>
+<span data-line><span>  .setEngine(&quot;牛逼哄哄的引擎&quot;)</span></span>
+<span data-line><span>  .setTyre(4)</span></span>
+<span data-line><span>  .setLogo('蓝博基泥')</span></span>
+<span data-line><span>  .build();</span></span>
+<span data-line><span>console.log(car)</span></span></code></pre></figure>
+<h3 id="原型模式">原型模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#原型模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pica.zhimg.com/v2-e455b144dd546f47f861b5ba1a3f5db2_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Person{</span></span>
+<span data-line><span>  constructor(name) {</span></span>
+<span data-line><span>    this.name = name;</span></span>
+<span data-line><span>  }</span></span>
+<span data-line> </span>
+<span data-line><span>   clone(){</span></span>
+<span data-line><span>      var that = Object.create(this.prototype);</span></span>
+<span data-line><span>      var other = this.apply(that, arguments);</span></span>
+<span data-line><span>      return (typeof other === 'object' &amp;&amp; other) ? other : that;</span></span>
+<span data-line><span>   }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>let tom = new Person('tom');</span></span>
+<span data-line><span>let jerry = tom.clone('jerry');</span></span></code></pre></figure>
+<h3 id="结构型模式"><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">结构型模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#结构型模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h3 id="代理模式">代理模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#代理模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic3.zhimg.com/v2-c0512b3af0f1cb9881fcdc52b81ee80e_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Master {</span></span>
+<span data-line><span>  doSomething(args) {</span></span>
+<span data-line><span>    console.log('Master do something...' + args.name);</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Proxy extends Master {</span></span>
+<span data-line><span>  constructor() {</span></span>
+<span data-line><span>    super();</span></span>
+<span data-line><span>  }</span></span>
+<span data-line> </span>
+<span data-line><span>  doSomething(args) {</span></span>
+<span data-line><span>    //do some other thing</span></span>
+<span data-line><span>    console.log('proxy do something')</span></span>
+<span data-line><span>    args.name = 'hello';</span></span>
+<span data-line><span>    //master do something</span></span>
+<span data-line><span>    super.doSomething(args)</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>const proxy = new Proxy();</span></span>
+<span data-line><span>proxy.doSomething();</span></span></code></pre></figure>
+<h3 id="组合模式"><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=2&amp;q=%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">组合模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#组合模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pica.zhimg.com/v2-85bd74cb8326724cbb91e41353c80f80_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Component {</span></span>
+<span data-line><span>    constructor() {}</span></span>
+<span data-line><span>    operation (){}</span></span>
+<span data-line><span>    add (Component){}</span></span>
+<span data-line><span>    remove (Component){}</span></span>
+<span data-line><span>    getChild (key){}</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Leaf extends Component {</span></span>
+<span data-line><span>    constructor(name) {</span></span>
+<span data-line><span>        super()</span></span>
+<span data-line><span>        this.name = name</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    operation (){}</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Composite extends Component {</span></span>
+<span data-line><span>    constructor(name) {</span></span>
+<span data-line><span>        super()</span></span>
+<span data-line><span>        this.name = name</span></span>
+<span data-line><span>        this.children = []</span></span>
+<span data-line><span>        facade.log('Composite created')</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    operation (){</span></span>
+<span data-line><span>        for(var i in this.children)</span></span>
+<span data-line><span>            this.children[i].Operation()</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    add (Component){</span></span>
+<span data-line><span>        this.children.push(Component)</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    remove (Component){</span></span>
+<span data-line><span>        for(var i in this.children)</span></span>
+<span data-line><span>            if(this.children[i] === Component)</span></span>
+<span data-line><span>                this.children.splice(i, 1)</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    getChild (key){</span></span>
+<span data-line><span>        return this.children[key]</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>const composite1 = new Composite('C1')</span></span>
+<span data-line><span>composite1.Add(new Leaf('L1'))</span></span>
+<span data-line><span>composite1.Add(new Leaf('L2'))</span></span>
+<span data-line><span>const composite2 = new Composite('C2')</span></span>
+<span data-line><span>composite2.Add(composite1)</span></span>
+<span data-line><span>composite1.GetChild(1).Operation()</span></span>
+<span data-line><span>composite2.Operation()</span></span></code></pre></figure>
+<h3 id="适配器模式"><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=2&amp;q=%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">适配器模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#适配器模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic2.zhimg.com/v2-30172ab9c4b4cefa6dcb6fb91b50b8d5_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class MediaPlayerInterface{</span></span>
+<span data-line><span>    play(audioType,fileName){</span></span>
+<span data-line><span>        throw &quot;播放方法,由子类实现&quot;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class VlcPlayer{</span></span>
+<span data-line><span>    playVlc(fileName){</span></span>
+<span data-line><span>        console.log(`我是Vlc播放器文件名称是${fileName}`)</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    playMp4(fileName){}</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Mp4Player{</span></span>
+<span data-line><span>    playMp4(fileName){</span></span>
+<span data-line><span>        console.log(`我是Mp4播放器文件名称是${fileName}`)</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class MediaPlayer extends MediaPlayerInterface{</span></span>
+<span data-line><span>    play(audioType,fileName){</span></span>
+<span data-line><span>        if(audioType==&quot;vlc&quot;)new VlcPlayer().playVlc(fileName);</span></span>
+<span data-line><span>        if(audioType==&quot;mp4&quot;)new Mp4Player().playMp4(fileName);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Mp3Player{</span></span>
+<span data-line><span>    playMp3(fileName){</span></span>
+<span data-line><span>        console.log(`我是Mp3播放器文件名称是${fileName}`)</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class AudioPlayerAdapter extends MediaPlayerInterface{</span></span>
+<span data-line><span>    constructor(mediaPlayer) {</span></span>
+<span data-line><span>        super()</span></span>
+<span data-line><span>        this.mediaPlayer = mediaPlayer;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    play(audioType,fileName){</span></span>
+<span data-line><span>      if(audioType===&quot;mp3&quot;){</span></span>
+<span data-line><span>          new Mp3Player().playMp3(fileName);</span></span>
+<span data-line><span>      }else{</span></span>
+<span data-line><span>          this.mediaPlayer.play(audioType,fileName);</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>const mediaPlayer = new MediaPlayer()</span></span>
+<span data-line><span>audioPlayer.play(&quot;mp4&quot;, &quot;alone.mp4&quot;);</span></span>
+<span data-line><span>audioPlayer.play(&quot;vlc&quot;, &quot;far far away.vlc&quot;);</span></span>
+<span data-line><span>//某天要新增mp3播放器，那么只需要套一层适配器</span></span>
+<span data-line><span>var audioPlayer = new AudioPlayerAdapter(mediaPlayer);</span></span>
+<span data-line><span>audioPlayer.play(&quot;mp3&quot;, &quot;beyond the horizon.mp3&quot;);</span></span></code></pre></figure>
+<h3 id="外观模式">外观模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#外观模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic1.zhimg.com/v2-3b3b2849e650cbbd75bd7af193b64c62_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Facade {</span></span>
+<span data-line><span>    _getUserName() {</span></span>
+<span data-line><span>        console.log(&quot;current user:&quot; + this.name);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    _setUserName(name) {</span></span>
+<span data-line><span>        this.name = name;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    _run() {</span></span>
+<span data-line><span>        console.log(&quot;running&quot;);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    _jump() {</span></span>
+<span data-line><span>        console.log(&quot;jumping&quot;);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    facade(args) {</span></span>
+<span data-line><span>        let {run,name,jump} = args;</span></span>
+<span data-line><span>        this._setUserName(name);</span></span>
+<span data-line><span>        this._getUserName();</span></span>
+<span data-line><span>        if (run) {</span></span>
+<span data-line><span>            this._run();</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>        if (jump) {</span></span>
+<span data-line><span>            this._jump();</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line><span>let facadeObj = new Facade();</span></span>
+<span data-line><span>facadeObj.facade({ run: true, jump: true ,name:'uk' });</span></span></code></pre></figure>
+<h3 id="装饰器模式">装饰器模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#装饰器模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://picx.zhimg.com/v2-6d107395aab5e40f002ad7acd4dc190d_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class MacBook {</span></span>
+<span data-line><span>    cost() {</span></span>
+<span data-line><span>        return 997;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>function Memory(macbook) {</span></span>
+<span data-line><span>    let v = macbook.cost();</span></span>
+<span data-line><span>    macbook.cost = function() {</span></span>
+<span data-line><span>        return v + 75;</span></span>
+<span data-line><span>    };</span></span>
+<span data-line><span>    return macbook;</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>function Engraving(macbook) {</span></span>
+<span data-line><span>    let v = macbook.cost();</span></span>
+<span data-line><span>    macbook.cost = function() {</span></span>
+<span data-line><span>        return v + 200;</span></span>
+<span data-line><span>    };</span></span>
+<span data-line><span>    return macbook;</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>function Insurance(macbook) {</span></span>
+<span data-line><span>    let v = macbook.cost();</span></span>
+<span data-line><span>    macbook.cost = function() {</span></span>
+<span data-line><span>        return v + 250;</span></span>
+<span data-line><span>    };</span></span>
+<span data-line><span>    return macbook;</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>let mb = new MacBook();</span></span>
+<span data-line><span>mb = Memory(mb);//加内存</span></span>
+<span data-line><span>mb = Engraving(mb);//加刻字</span></span>
+<span data-line><span>mb = Insurance(mb);//加保险</span></span>
+<span data-line><span>console.log(mb.cost());// 总计: 1522</span></span></code></pre></figure>
+<h3 id="桥接模式">桥接模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#桥接模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://picx.zhimg.com/v2-dd3dcfbf7c49aedcd5d4664891c14d4d_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class DrawAPI {</span></span>
+<span data-line><span>   drawCircle(radius,x, y){</span></span>
+<span data-line><span>    throw &quot;抽象方法&quot;</span></span>
+<span data-line><span>   }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class RedCircle extends DrawAPI {</span></span>
+<span data-line><span>    drawCircle( radius,  x,  y) {</span></span>
+<span data-line><span>     console.log(&quot;Drawing Circle[ color: red, radius: &quot; + radius + &quot;, x: &quot; + x + &quot;, &quot; + y + &quot;]&quot;);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line><span>class GreenCircle extends DrawAPI {</span></span>
+<span data-line><span>    drawCircle( radius,  x,  y) {</span></span>
+<span data-line><span>      console.log(&quot;Drawing Circle[ color: green, radius: &quot; + radius + &quot;, x: &quot; + x + &quot;, &quot; + y + &quot;]&quot;);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Shape {</span></span>
+<span data-line><span>    constructor(drawAPI) {</span></span>
+<span data-line><span>        this.drawAPI = drawAPI;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    draw(){</span></span>
+<span data-line><span>         this.drawAPI.drawCircle(this.x,this.y,this.radius)</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Circle extends Shape{</span></span>
+<span data-line><span>    constructor(x, y, radius, drawAPI){</span></span>
+<span data-line><span>        super(drawAPI);</span></span>
+<span data-line><span>        this.x = x;</span></span>
+<span data-line><span>        this.y = y;</span></span>
+<span data-line><span>        this.radius = radius;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line><span>//将实际Circle渲染的实现与Circle定义进行分离</span></span>
+<span data-line><span>const redCircle = new Circle(100,1000, 10, new RedCircle());//画红圆</span></span>
+<span data-line><span>const greenCircle = new Circle(100,100, 10, new GreenCircle());//画绿圆</span></span>
+<span data-line><span>redCircle.draw();</span></span>
+<span data-line><span>greenCircle.draw();</span></span></code></pre></figure>
+<h3 id="享元模式">享元模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#享元模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pica.zhimg.com/v2-dd0734bf5fa83e9565e519eb2975e31e_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Flyweight {</span></span>
+<span data-line><span>    constructor(make, model, processor){</span></span>
+<span data-line><span>      this.make = make;</span></span>
+<span data-line><span>      this.model = model;</span></span>
+<span data-line><span>      this.processor = processor;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line><span>class FlyWeightFactory {</span></span>
+<span data-line><span>    constructor(){</span></span>
+<span data-line><span>      flyweights = {};</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    get(make, model, processor) {</span></span>
+<span data-line><span>      if (!flyweights[make + model]) {</span></span>
+<span data-line><span>          flyweights[make + model] = new Flyweight(make, model, processor);</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>      return flyweights[make + model];</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    getCount() {</span></span>
+<span data-line><span>      let count = 0;</span></span>
+<span data-line><span>      for (let f in flyweights) count++;</span></span>
+<span data-line><span>      return count;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line><span> class Computer {</span></span>
+<span data-line><span>   constructor (make, model, processor, memory, tag){</span></span>
+<span data-line><span>      this.flyweight = FlyWeightFactory.get(make, model, processor);</span></span>
+<span data-line><span>      this.memory = memory;</span></span>
+<span data-line><span>      this.tag = tag;</span></span>
+<span data-line><span>   }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class ComputerCollection {</span></span>
+<span data-line><span>   constructor(){</span></span>
+<span data-line><span>      var computers = {};</span></span>
+<span data-line><span>      var count = 0;</span></span>
+<span data-line><span>   }</span></span>
+<span data-line> </span>
+<span data-line><span>   add(make, model, processor, memory, tag){</span></span>
+<span data-line><span>      computers[tag] = new Computer(make, model, processor, memory, tag);</span></span>
+<span data-line><span>      count++;</span></span>
+<span data-line><span>   }</span></span>
+<span data-line> </span>
+<span data-line><span>    get(tag){</span></span>
+<span data-line><span>      return computers[tag];</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    getCount() {</span></span>
+<span data-line><span>      return count;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>var computers = new ComputerCollection();</span></span>
+<span data-line><span>computers.add(&quot;Dell&quot;, &quot;Studio XPS&quot;, &quot;Intel&quot;, &quot;5G&quot;, &quot;Y755P&quot;);</span></span>
+<span data-line><span>computers.add(&quot;Dell&quot;, &quot;Studio XPS&quot;, &quot;Intel&quot;, &quot;6G&quot;, &quot;X997T&quot;);</span></span>
+<span data-line><span>computers.add(&quot;Dell&quot;, &quot;Studio XPS&quot;, &quot;Intel&quot;, &quot;2G&quot;, &quot;U8U80&quot;);</span></span>
+<span data-line><span>computers.add(&quot;Dell&quot;, &quot;Studio XPS&quot;, &quot;Intel&quot;, &quot;2G&quot;, &quot;NT777&quot;);</span></span>
+<span data-line><span>computers.add(&quot;Dell&quot;, &quot;Studio XPS&quot;, &quot;Intel&quot;, &quot;2G&quot;, &quot;0J88A&quot;);</span></span>
+<span data-line><span>computers.add(&quot;HP&quot;, &quot;Envy&quot;, &quot;Intel&quot;, &quot;4G&quot;, &quot;CNU883701&quot;);</span></span>
+<span data-line><span>computers.add(&quot;HP&quot;, &quot;Envy&quot;, &quot;Intel&quot;, &quot;2G&quot;, &quot;TXU003283&quot;);</span></span>
+<span data-line><span>console.log(&quot;Computers: &quot; + computers.getCount());</span></span>
+<span data-line><span>//count = 7;</span></span>
+<span data-line><span>console.log(&quot;Flyweights: &quot; + FlyWeightFactory.getCount());</span></span>
+<span data-line><span>//count = 2; 这里把品牌/型号/处理器都抽成共享单元了</span></span>
+<span data-line><span>//[(&quot;Dell&quot;, &quot;Studio XPS&quot;, &quot;Intel&quot;),(&quot;HP&quot;, &quot;Envy&quot;, &quot;Intel&quot;)]</span></span></code></pre></figure>
+<h3 id="行为型模式"><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">行为型模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#行为型模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h3 id="策略模式">策略模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#策略模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic2.zhimg.com/v2-8e7b6fe00ae551675d12d60518a8567b_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Checker {</span></span>
+<span data-line><span>  constructor(check, instructions) {</span></span>
+<span data-line><span>     this.check = check;</span></span>
+<span data-line><span>     this.instructions = instructions;</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Validator {</span></span>
+<span data-line><span>  constructor(config) {</span></span>
+<span data-line><span>    this.config = config,</span></span>
+<span data-line><span>    this.messages = {};</span></span>
+<span data-line><span>  }</span></span>
+<span data-line> </span>
+<span data-line><span>  validate(data) {</span></span>
+<span data-line><span>    for (let key in data) {</span></span>
+<span data-line><span>      let value = data[key];</span></span>
+<span data-line><span>      let type = this.config[key];</span></span>
+<span data-line><span>      if (!type) {</span></span>
+<span data-line><span>        continue;</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>      let checker = Validator[type];</span></span>
+<span data-line><span>      if (!checker) {</span></span>
+<span data-line><span>        throw new Error(`No handler to validate type ${type}`);</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>      let result = checker.check(value);</span></span>
+<span data-line><span>      if (!result) {</span></span>
+<span data-line><span>        this.messages.push(checker.instructions + ` **${value}**`);</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>  }</span></span>
+<span data-line> </span>
+<span data-line><span>  hasError() {</span></span>
+<span data-line><span>    return this.messages.length !== 0;</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>let data = {</span></span>
+<span data-line><span>   first_name:'Super',</span></span>
+<span data-line><span>   last_name:'Man',</span></span>
+<span data-line><span>   age:'unknown',</span></span>
+<span data-line><span>   username:'uk'</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>let config = {</span></span>
+<span data-line><span>  first_name:'isNonEmpty',</span></span>
+<span data-line><span>  age:'isNumber',</span></span>
+<span data-line><span>  username:'isAlphaNum'</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line><span>Validator.isNumber = new Checker((val) => !isNaN(val), 'the value can only be a valid number');</span></span>
+<span data-line><span>Validator.isNonEmpty = new Checker((val) => val !== &quot;&quot;, 'the value can not be empty');</span></span>
+<span data-line><span>Validator.isAlphaNum = new Checker((val) => !/^a-z0-9/i.test(val), 'the value can not have special symbols');</span></span>
+<span data-line> </span>
+<span data-line><span>let validator = new Validator(config);</span></span>
+<span data-line><span>validator.validate(data);</span></span>
+<span data-line><span>console.log(validator.hasError());// true</span></span>
+<span data-line><span>console.log(validator.messages.join('\n')); // the value can only be a valid number **unknown**</span></span></code></pre></figure>
+<h3 id="迭代器模式">迭代器模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#迭代器模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pica.zhimg.com/v2-ee1cc349fb4bea767eb554c2704b9b2a_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class IteratorArray {</span></span>
+<span data-line><span>  constructor(array) {</span></span>
+<span data-line><span>    super();</span></span>
+<span data-line><span>    this.data = array;</span></span>
+<span data-line><span>  }</span></span>
+<span data-line> </span>
+<span data-line><span>  [Symbol.iterator](){</span></span>
+<span data-line><span>    let index = 0;</span></span>
+<span data-line><span>    return {</span></span>
+<span data-line><span>      next: () => {</span></span>
+<span data-line><span>        if (index &lt; this.data.length) {</span></span>
+<span data-line><span>            return {</span></span>
+<span data-line><span>                value: this.data[index++],</span></span>
+<span data-line><span>                done: false</span></span>
+<span data-line><span>            };</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>        return {</span></span>
+<span data-line><span>             value: undefined,</span></span>
+<span data-line><span>             done: true</span></span>
+<span data-line><span>        };</span></span>
+<span data-line><span>      },</span></span>
+<span data-line><span>      hasNext: () => index &lt; this.data.length,</span></span>
+<span data-line><span>      rewind: () => index = 0,</span></span>
+<span data-line><span>      current: () => {</span></span>
+<span data-line><span>        index -= 1;</span></span>
+<span data-line><span>        if (index &lt; this.data.length) {</span></span>
+<span data-line><span>            return {</span></span>
+<span data-line><span>                value: this.data[index++],</span></span>
+<span data-line><span>                done: false</span></span>
+<span data-line><span>            };</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>        return {</span></span>
+<span data-line><span>            value: undefined,</span></span>
+<span data-line><span>                done: true};</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>const iteratorArray = new IteratorArray([1,2,3,4,5])</span></span>
+<span data-line><span>const iter = iteratorArray[Symbol.iterator]();</span></span>
+<span data-line><span>console.log(iter.next()); // { value: 1, done: false }</span></span>
+<span data-line><span>console.log(iter.next()); // { value: 2, done: false }</span></span>
+<span data-line><span>console.log(iter.current());// { value: 2, done: false }</span></span>
+<span data-line><span>console.log(iter.hasNext());// true</span></span>
+<span data-line><span>console.log(iter.rewind()); // rewind!</span></span>
+<span data-line><span>console.log(iter.next()); // { value: 1, done: false }</span></span>
+<span data-line> </span>
+<span data-line><span>// for...of</span></span>
+<span data-line><span>for (let value of iteratorArray) {</span></span>
+<span data-line><span>  console.log(value);</span></span>
+<span data-line><span>}</span></span></code></pre></figure>
+<h3 id="观察者模式"><a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=2&amp;q=%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">观察者模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#观察者模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pica.zhimg.com/v2-078eeda71f1073f11fa517ea1c9205ba_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Pubsub {</span></span>
+<span data-line><span>    constructor(){</span></span>
+<span data-line><span>        this.topics = {};</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    publish(name, args) {</span></span>
+<span data-line><span>        if (!this.topics[name]) {</span></span>
+<span data-line><span>            return false;</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>        for(let key in this.topics[name]){</span></span>
+<span data-line><span>            const callback = this.topics[name];</span></span>
+<span data-line><span>            callback(args);</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    subscribe(name, callback) {</span></span>
+<span data-line><span>        if (!this.topics[name]) {</span></span>
+<span data-line><span>            this.topics[name] = [];</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>        this.topics[name].push(callback);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    unsubscribe(name,callback) {</span></span>
+<span data-line><span>         if (!this.topics[name]) {</span></span>
+<span data-line><span>            return false;</span></span>
+<span data-line><span>         }</span></span>
+<span data-line><span>         this.topics[name].remove(callback);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>let obj = {</span></span>
+<span data-line><span>   callback:(message)=>{</span></span>
+<span data-line><span>        console.log(message);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line><span>let pubsub = new Pubsub();</span></span>
+<span data-line><span>pubsub.subscribe(&quot;subscribe&quot;, obj.callback);</span></span>
+<span data-line><span>pubsub.publish(&quot;subscribe&quot;, &quot;hello all!&quot;);</span></span>
+<span data-line><span>//obj console hello all!</span></span></code></pre></figure>
+<h3 id="命令模式">命令模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#命令模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic4.zhimg.com/v2-f2cfb66f725fbb47bb5948bb1b266fbd_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Command {</span></span>
+<span data-line><span>    constructor(do,undo){</span></span>
+<span data-line><span>        this.do = do;</span></span>
+<span data-line><span>        this.undo = undo;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    execute(){</span></span>
+<span data-line><span>        this.do();</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    undo(){</span></span>
+<span data-line><span>      this.undo();</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Commands {</span></span>
+<span data-line><span>    constructor(){</span></span>
+<span data-line><span>        this.commandsList = [];</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    add( command ){</span></span>
+<span data-line><span>    this.commandsList.push( command );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    execute(){</span></span>
+<span data-line><span>      for (const command of this.commandsList){</span></span>
+<span data-line><span>        command.execute();</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    undo(){</span></span>
+<span data-line><span>      for (const command of this.commandsList){</span></span>
+<span data-line><span>        command.undo();</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span> let sleepCommond = new Command(()=>{</span></span>
+<span data-line><span>    console.log('sleep')</span></span>
+<span data-line><span> },()=>{</span></span>
+<span data-line><span>    console.log('wake up');</span></span>
+<span data-line><span> });</span></span>
+<span data-line> </span>
+<span data-line><span>  let runCommond = new Command(()=>{</span></span>
+<span data-line><span>    console.log('run')</span></span>
+<span data-line><span> },()=>{</span></span>
+<span data-line><span>    console.log('back');</span></span>
+<span data-line><span> });</span></span>
+<span data-line> </span>
+<span data-line><span>const commands = Commands();</span></span>
+<span data-line><span>commands.add( sleepCommond );</span></span>
+<span data-line><span>commands.add( runCommond );</span></span>
+<span data-line><span>commands.execute();</span></span>
+<span data-line><span>commands.undo();</span></span></code></pre></figure>
+<h3 id="模版方法模式">模版方法模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#模版方法模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pica.zhimg.com/v2-2e8eb8722c52c6aeb213dd375be37a26_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Beverage {</span></span>
+<span data-line><span>    boilWater(){</span></span>
+<span data-line><span>      console.log( &quot;煮一壶水&quot; );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    brew(){</span></span>
+<span data-line><span>      throw new Error('具体由子类实现');</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    pourInCup(){</span></span>
+<span data-line><span>      throw new Error('具体由子类实现');</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    addCondiments(){</span></span>
+<span data-line><span>      throw new Error('具体由子类实现');</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    go(){</span></span>
+<span data-line><span>        boilWater();</span></span>
+<span data-line><span>        brew();</span></span>
+<span data-line><span>        pourInCup();</span></span>
+<span data-line><span>        addCondiments();</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Coffee extends Beverage{</span></span>
+<span data-line><span>    brew() {</span></span>
+<span data-line><span>      console.log( &quot;用沸水冲泡咖啡&quot; );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    pourInCup(){</span></span>
+<span data-line><span>      console.log( &quot;把咖啡倒进杯子&quot; );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    addCondiments() {</span></span>
+<span data-line><span>      console.log( &quot;加糖和牛奶&quot; );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Tea extends Beverage{</span></span>
+<span data-line><span>    brew() {</span></span>
+<span data-line><span>      console.log( &quot;用沸水浸泡茶叶&quot; );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    pourInCup(){</span></span>
+<span data-line><span>      console.log( &quot;把茶倒进杯子&quot; );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    addCondiments() {</span></span>
+<span data-line><span>      console.log( &quot;加柠檬&quot; );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>const coffee = new Coffee();</span></span>
+<span data-line><span>const tea = new Tea();</span></span>
+<span data-line><span>coffee.go();</span></span>
+<span data-line><span>tea.go();</span></span></code></pre></figure>
+<h3 id="责任链模式">责任链模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#责任链模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic4.zhimg.com/v2-eb3b75703ece6e30bb8c56980777144b_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>let order500 = function( orderType, pay, stock ){</span></span>
+<span data-line><span>  if ( orderType === 1 &amp;&amp; pay === true ){</span></span>
+<span data-line><span>    console.log( '500 元定金预购，得到100 优惠券' );</span></span>
+<span data-line><span>  }else{</span></span>
+<span data-line><span>    return 'next'; // 我不知道下一个节点是谁，反正把请求往后面传递</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line><span>let order200 = function( orderType, pay, stock ){</span></span>
+<span data-line><span>  if ( orderType === 2 &amp;&amp; pay === true ){</span></span>
+<span data-line><span>    console.log( '200 元定金预购，得到50 优惠券' );</span></span>
+<span data-line><span>  } else {</span></span>
+<span data-line><span>    return 'next'; // 我不知道下一个节点是谁，反正把请求往后面传递</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line><span>let orderNormal = function( orderType, pay, stock ){</span></span>
+<span data-line><span>  if ( stock > 0 ){</span></span>
+<span data-line><span>    console.log( '普通购买，无优惠券' );</span></span>
+<span data-line><span>  }else{</span></span>
+<span data-line><span>    console.log( '手机库存不足' );</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line><span>class Chain {</span></span>
+<span data-line><span>    constructor(){</span></span>
+<span data-line><span>      this.fn = fn;</span></span>
+<span data-line><span>      this.nextFunc = null;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    setNextFunc( nextFunc ){</span></span>
+<span data-line><span>      return this.nextFunc = nextFunc;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    run() {</span></span>
+<span data-line><span>        var result = this.fn.apply( this, arguments );</span></span>
+<span data-line><span>        if ( result === 'next' ){</span></span>
+<span data-line><span>            return this.nextFunc &amp;&amp; this.nextFunc.run.apply( this.nextFunc, arguments);</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>        return result;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>var chainOrder500 = new Chain( order500 );</span></span>
+<span data-line><span>var chainOrder200 = new Chain( order200 );</span></span>
+<span data-line><span>var chainOrderNormal = new Chain( orderNormal );</span></span>
+<span data-line><span>//构造处理链路</span></span>
+<span data-line><span>chainOrder500.setNextFunc( chainOrder200 );</span></span>
+<span data-line><span>chainOrder200.setNextFunc( chainOrderNormal );</span></span>
+<span data-line> </span>
+<span data-line><span>chainOrder500.run( 1, true, 500 ); // 输出：500 元定金预购，得到100 优惠券</span></span>
+<span data-line><span>chainOrder500.run( 2, true, 500 ); // 输出：200 元定金预购，得到50 优惠券</span></span>
+<span data-line><span>chainOrder500.run( 3, true, 500 ); // 输出：普通购买，无优惠券</span></span>
+<span data-line><span>chainOrder500.run( 1, false, 0 ); // 输出：手机库存不足</span></span></code></pre></figure>
+<h3 id="中介者模式">中介者模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#中介者模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pica.zhimg.com/v2-08a8cbaead73a3ce942cfaed683413f2_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class ChatRoom {</span></span>
+<span data-line><span>     constructor () {}</span></span>
+<span data-line> </span>
+<span data-line><span>     showMessage (message) {</span></span>
+<span data-line><span>         console.log(new Date(), user.getName(), message)</span></span>
+<span data-line><span>     }</span></span>
+<span data-line><span> }</span></span>
+<span data-line> </span>
+<span data-line><span> class User {</span></span>
+<span data-line><span>     constructor (name){</span></span>
+<span data-line><span>         this.name = name</span></span>
+<span data-line><span>     }</span></span>
+<span data-line><span>     setName () {</span></span>
+<span data-line><span>         this.name = name</span></span>
+<span data-line><span>     }</span></span>
+<span data-line><span>     getName() {</span></span>
+<span data-line><span>        return this.name</span></span>
+<span data-line><span>     }</span></span>
+<span data-line><span>     setRoom(room){</span></span>
+<span data-line><span>        this.room = room; </span></span>
+<span data-line><span>     }</span></span>
+<span data-line><span>     sendMessage (message) {</span></span>
+<span data-line><span>        room.showMessage(this, message)</span></span>
+<span data-line><span>     }</span></span>
+<span data-line><span> }</span></span>
+<span data-line> </span>
+<span data-line><span> //chatRoom将tom跟jack解耦</span></span>
+<span data-line><span>const chatRoom = ChatRoom();</span></span>
+<span data-line> </span>
+<span data-line><span>const tom = new User(&quot;Tom Zhang&quot;);</span></span>
+<span data-line><span>tom.setRoom(chatRoom);</span></span>
+<span data-line><span>tom.sendMessage(&quot;My name is Tom&quot;);</span></span>
+<span data-line> </span>
+<span data-line><span>const jack = new User(&quot;Jack Chen&quot;);</span></span>
+<span data-line><span>jack.setRoom(chatRoom);</span></span>
+<span data-line><span>jack.sendMessage(&quot;My name is Jack&quot;);</span></span></code></pre></figure>
+<h3 id="状态模式">状态模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#状态模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic1.zhimg.com/v2-289679f6032e745659cc0283636883b0_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Context {</span></span>
+<span data-line><span>    constructor () {</span></span>
+<span data-line><span>        this.state = null</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    setState(state) {</span></span>
+<span data-line><span>        this.state = state</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    getState() {</span></span>
+<span data-line><span>        return this.state</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class State {</span></span>
+<span data-line><span>    doAction(context) {</span></span>
+<span data-line><span>         throw new Error('具体子类去实现状态')</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class StartState extends State {</span></span>
+<span data-line><span>    constructor () {</span></span>
+<span data-line><span>        super()</span></span>
+<span data-line><span>        this.context = null</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    doAction(context) {</span></span>
+<span data-line><span>        console.log('this is start state');</span></span>
+<span data-line><span>        context.setState(this)</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    printState() {</span></span>
+<span data-line><span>         console.log('start state')</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class StopState extends State {</span></span>
+<span data-line><span>    constructor() {</span></span>
+<span data-line><span>        super()</span></span>
+<span data-line><span>        this.context = null</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    doAction(context) {</span></span>
+<span data-line><span>        console.log('this is stop state');</span></span>
+<span data-line><span>        context.setState(this)</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    printState() {</span></span>
+<span data-line><span>         console.log('stop state')</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class LoadingState extends State {</span></span>
+<span data-line><span>    constructor() {</span></span>
+<span data-line><span>        super()</span></span>
+<span data-line><span>        this.context = null</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    doAction(context) {</span></span>
+<span data-line><span>        console.log('this is loading state');</span></span>
+<span data-line><span>        context.setState(this)</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    printState() {</span></span>
+<span data-line><span>         console.log('loading state')</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>const context = new Context()</span></span>
+<span data-line><span>let startState = new StartState()</span></span>
+<span data-line><span>startState.doAction(context)</span></span>
+<span data-line><span>context.getState().toStateStr()</span></span>
+<span data-line> </span>
+<span data-line><span>let stopState = new StopState()</span></span>
+<span data-line><span>stopState.doAction(context)</span></span>
+<span data-line><span>context.getState().toStateStr()</span></span>
+<span data-line> </span>
+<span data-line><span>let loadingState = new LoadingState()</span></span>
+<span data-line><span>loadingState.doAction(context)</span></span>
+<span data-line><span>context.getState().toStateStr()</span></span></code></pre></figure>
+<h3 id="访问者模式">访问者模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#访问者模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pic1.zhimg.com/v2-eafab09432bc0788015559767d6852c6_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Visitor {</span></span>
+<span data-line><span>   visit(target) {</span></span>
+<span data-line><span>     console.log(`正在查${target.name}的水表`);</span></span>
+<span data-line><span>   }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class User{</span></span>
+<span data-line><span>    constructor(name) {</span></span>
+<span data-line><span>        this.name = name || &quot;&quot;;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    accept(visitor) {</span></span>
+<span data-line><span>        visitor.visit(this);</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>let user = new User('yaoxian');</span></span>
+<span data-line><span>var visitor = new Visitor();</span></span>
+<span data-line><span>user.accept( visitor );//正在查yaoxian的水表</span></span></code></pre></figure>
+<h3 id="解释器模式">解释器模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#解释器模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://picx.zhimg.com/v2-7ae5a6b2c9edcad739d838f87f934973_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class Context{</span></span>
+<span data-line><span>   constructor(input) {</span></span>
+<span data-line><span>      this.input = input;</span></span>
+<span data-line><span>      this.output = 0;</span></span>
+<span data-line><span>   }</span></span>
+<span data-line> </span>
+<span data-line><span>    startsWith(str) {</span></span>
+<span data-line><span>        return this.input.substr(0, str.length) === str;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>class Expression{</span></span>
+<span data-line><span>    constructor(name, one, four, five, nine, multiplier) {</span></span>
+<span data-line><span>        this.name = name;</span></span>
+<span data-line><span>        this.one = one;</span></span>
+<span data-line><span>        this.four = four;</span></span>
+<span data-line><span>        this.five = five;</span></span>
+<span data-line><span>        this.nine = nine;</span></span>
+<span data-line><span>        this.multiplier = multiplier;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line> </span>
+<span data-line><span>    interpret(context) {</span></span>
+<span data-line><span>        if (context.input.length == 0) {</span></span>
+<span data-line><span>            return;</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>        else if (context.startsWith(this.nine)) {</span></span>
+<span data-line><span>            context.output += (9 * this.multiplier);</span></span>
+<span data-line><span>            context.input = context.input.substr(2);</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>        else if (context.startsWith(this.four)) {</span></span>
+<span data-line><span>            context.output += (4 * this.multiplier);</span></span>
+<span data-line><span>            context.input = context.input.substr(2);</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>        else if (context.startsWith(this.five)) {</span></span>
+<span data-line><span>            context.output += (5 * this.multiplier);</span></span>
+<span data-line><span>            context.input = context.input.substr(1);</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>        while (context.startsWith(this.one)) {</span></span>
+<span data-line><span>            context.output += (1 * this.multiplier);</span></span>
+<span data-line><span>            context.input = context.input.substr(1);</span></span>
+<span data-line><span>        }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line> </span>
+<span data-line><span>const roman = &quot;MCMXXVIII&quot;</span></span>
+<span data-line><span>const context = new Context(roman);</span></span>
+<span data-line><span>const tree = [];</span></span>
+<span data-line><span>tree.push(new Expression(&quot;thousand&quot;, &quot;M&quot;, &quot; &quot; , &quot; &quot;, &quot; &quot; , 1000));</span></span>
+<span data-line><span>tree.push(new Expression(&quot;hundred&quot;, &quot;C&quot;, &quot;CD&quot;, &quot;D&quot;, &quot;CM&quot;, 100));</span></span>
+<span data-line><span>tree.push(new Expression(&quot;ten&quot;, &quot;X&quot;, &quot;XL&quot;, &quot;L&quot;, &quot;XC&quot;, 10));</span></span>
+<span data-line><span>tree.push(new Expression(&quot;one&quot;, &quot;I&quot;, &quot;IV&quot;, &quot;V&quot;, &quot;IX&quot;, 1));</span></span>
+<span data-line><span>for (var i = 0, len = tree.length; i &lt; len; i++) {</span></span>
+<span data-line><span>  tree[i].interpret(context);</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>alert(roman + &quot; = &quot; + context.output);</span></span></code></pre></figure>
+<h3 id="备案录模式">备案录模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#备案录模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="https://pica.zhimg.com/v2-e701f9de74d7b119604dc28073b3cfee_1440w.jpg" alt/></p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>class CacheUtil {</span></span>
+<span data-line><span>   constructor() {</span></span>
+<span data-line><span>      this.cache = {};</span></span>
+<span data-line><span>   }</span></span>
+<span data-line> </span>
+<span data-line><span>   requestData(url,callback){</span></span>
+<span data-line><span>       if (cache[url]){</span></span>
+<span data-line><span>          data = cache[url];</span></span>
+<span data-line><span>          callback(data);</span></span>
+<span data-line><span>      }else{</span></span>
+<span data-line><span>          //模拟网络请求</span></span>
+<span data-line><span>          setTimeout(()=>{</span></span>
+<span data-line><span>                cache[url] = data;</span></span>
+<span data-line><span>                callback(data);</span></span>
+<span data-line><span>          },3000);   </span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>   }</span></span>
+<span data-line><span>}</span></span>
+<span data-line> </span>
+<span data-line><span>let cache = new CacheUtil();</span></span>
+<span data-line><span>cache.requestData('www.baidu.com',(data)=>{console.log(data)});//请求</span></span>
+<span data-line><span>cache.requestData('www.baidu.com',(data)=>{console.log(data)});//从备忘录中获取</span></span></code></pre></figure>
+<p>关于更多详细的设计模式说明可以到<a href="https://link.zhihu.com/?target=https%3A//addyosmani.com/resources/essentialjsdesignpatterns/book/%23factorypatternjavascript" class="external">《javascript pattern》<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>去查阅。</p>
+<h3 id="思考总结">思考总结<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#思考总结" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>针对上述的一些设计模式，对其解决问题场景提炼出思考总结。</p>
+<p>| 具体设计模式 | 解决的问题 | | --- | --- | | 单例模式 | 保证唯一性 | | <a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=3&amp;q=%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">策略模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> | 多种策略方案实现结果 | | <a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=3&amp;q=%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">代理模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> | 对目标对象做前置处理（一般只有一层代理包装），并执行 | | <a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=3&amp;q=%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">迭代器模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> | 迭代执行与处理分离 | | 观察者模式（发布订阅模式） | 解耦发布者与订阅者之间的关系 | | <a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=3&amp;q=%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">命令模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> | 记录回溯哦操作，包装操作行为 | | 组合模式 | 合理组织树形结构 | | 模版方法模式 | 定义操作的流程，实现交由各个子类去实现 | | 享元模式 | 明确内外变化，把静态部分单独抽成对象，共享于依赖的多个对象 | | 责任链模式 | 根据各自的职责，<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E9%93%BE%E5%BC%8F%E5%A4%84%E7%90%86&amp;zhida_source=entity" class="external">链式处理<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> | | 中介者模式 | 解耦多个对象之间的关系，由中间人处理 | | 适配器模式 | 保持接口原则不变，对新进来的接口进行适配包装掉用 | | 状态模式 | 状态流转，维护<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E7%8A%B6%E6%80%81%E6%9C%BA&amp;zhida_source=entity" class="external">状态机<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> | | 工厂模式 | 管理对象创建 | | 外观模式 | 收口对外暴露的接口 | | 装饰器模式 | 类似代理，但是可以多重包装目标对象，并不执行具体逻辑，仅仅包装 | | 备案录模式 | <a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE&amp;zhida_source=entity" class="external">缓存数据<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>，历史可回溯 | | <a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=3&amp;q=%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">访问者模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a> | 允许外部权限访问内部数据 |</p>
+<h3 id="设计模式中相似模式的一些思考">设计模式中相似模式的一些思考<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#设计模式中相似模式的一些思考" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h3 id="中介者模式和观察者模式">中介者模式和观察者模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#中介者模式和观察者模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>中介者解决的问题是将多个角色进行解耦，过程中会把所有角色交互都收敛到中介角色中，使得各个角色只需要跟中介者通讯。而对于观察者模式，日常中用的比较多的就是<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=2&amp;q=%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85&amp;zhida_source=entity" class="external">发布订阅<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>模式，主要是将订阅者将事件注册到发布者上，一旦发布者发布信息就可以通知到所有的订阅者上，并没有存在中间人去解耦发布者跟订阅者之间的关系。</p>
+<h3 id="代理模式和装饰器模式">代理模式和装饰器模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#代理模式和装饰器模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>代理模式跟装饰器模式都是对目标对象进行包装，但是有比较本质的区别。代理模式一般调用引起目标角色的调用，而<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=6&amp;q=%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">装饰器模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>仅仅是对目标角色进行包装返回而不会直接触发目标调用。另外代理往往是对目标角色包装一层，而对于装饰器可以不断的嵌套目标角色返回包装后的目标角色。</p>
+<h3 id="状态模式和策略模式">状态模式和策略模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#状态模式和策略模式" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>状态模式和策略模式都封装了一系列<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E7%AE%97%E6%B3%95&amp;zhida_source=entity" class="external">算法<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>或者行为，类图看上去很相似，但是意图不同。策略模式的各种策略是相互独立平等的，没有内部联系。而对于<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=6&amp;q=%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">状态模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>往往维护一个状态机，各个状态之间存在依赖关系。</p>
+<h3 id="重构技巧">重构技巧<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#重构技巧" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>另外过程中也总结了日常写代码中，要注意的一些点以及如何重构自己写得不太好的代码。</p>
+<h3 id="提炼函数">提炼函数<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#提炼函数" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>如果在函数中有一段代码可以被独立出来，那我们最好把这些代码放进另外一个独立的函数 中。这样做的好处：避免出现超大函数，独立出来的函数有助于<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8&amp;zhida_source=entity" class="external">代码复用<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>/覆写/逻辑清晰</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//bad case</span></span>
+<span data-line><span>var getUserInfo = function(){</span></span>
+<span data-line><span>  ajax( 'http:// xxx.com/userInfo', function( data ){</span></span>
+<span data-line><span>    console.log( 'userId: ' + data.userId );</span></span>
+<span data-line><span>    console.log( 'userName: ' + data.userName );</span></span>
+<span data-line><span>    console.log( 'nickName: ' + data.nickName );</span></span>
+<span data-line><span>  });</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<p>改成：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//good case</span></span>
+<span data-line><span>var getUserInfo = function(){</span></span>
+<span data-line><span>  ajax( 'http:// xxx.com/userInfo', function( data ){</span></span>
+<span data-line><span>    printDetails( data );</span></span>
+<span data-line><span>  });</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>var printDetails = function( data ){</span></span>
+<span data-line><span>  console.log( 'userId: ' + data.userId );</span></span>
+<span data-line><span>  console.log( 'userName: ' + data.userName );</span></span>
+<span data-line><span>  console.log( 'nickName: ' + data.nickName );</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<h3 id="合并重复条件片段">合并重复条件片段<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#合并重复条件片段" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>如果一个函数体内有一些条件分支语句，而这些条件分支语句内部散布了一些重复的代码， 那么就有必要进行合并去重工作。</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//bad case</span></span>
+<span data-line><span>var paging = function( currPage ){</span></span>
+<span data-line><span>  if ( currPage &lt;= 0 ){</span></span>
+<span data-line><span>    currPage = 0;</span></span>
+<span data-line><span>    jump( currPage ); // 跳转</span></span>
+<span data-line><span>  }else if ( currPage >= totalPage ){</span></span>
+<span data-line><span>    currPage = totalPage;</span></span>
+<span data-line><span>    jump( currPage ); // 跳转</span></span>
+<span data-line><span>  }else{</span></span>
+<span data-line><span>    jump( currPage ); // 跳转</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<p>改成</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//good case</span></span>
+<span data-line><span>var paging = function( currPage ){</span></span>
+<span data-line><span>  if ( currPage &lt;= 0 ){</span></span>
+<span data-line><span>    currPage = 0;</span></span>
+<span data-line><span>  }else if ( currPage >= totalPage ){</span></span>
+<span data-line><span>    currPage = totalPage;</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>  jump( currPage ); // 把jump 函数独立出来</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<h3 id="把条件分支语句提炼出函数">把条件分支语句提炼出函数<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#把条件分支语句提炼出函数" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>复杂的条件分支语句是导致程序难以阅读和理解的重要原因，而且容易导致 一个庞大的函数,把逻辑判断代码提炼成一个单独的函数，既能更准确地表达代码的意思， 函数名本身又能起到注释的作用。</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//bad case</span></span>
+<span data-line><span>var getPrice = function( price ){</span></span>
+<span data-line><span>    var date = new Date();</span></span>
+<span data-line><span>    if ( date.getMonth() >= 6 &amp;&amp; date.getMonth() &lt;= 9 ){ // 夏天</span></span>
+<span data-line><span>        return price * 0.8;</span></span>
+<span data-line><span>    }   </span></span>
+<span data-line><span>    return price;</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<p>改成:</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//good case</span></span>
+<span data-line><span>var isSummer = function(){</span></span>
+<span data-line><span>    var date = new Date();</span></span>
+<span data-line><span>    return date.getMonth() >= 6 &amp;&amp; date.getMonth() &lt;= 9;</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line><span>var getPrice = function( price ){</span></span>
+<span data-line><span>  if ( isSummer() ){ // 夏天</span></span>
+<span data-line><span>    return price * 0.8;</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>  return price;</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<h3 id="合理使用循环">合理使用循环<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#合理使用循环" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>在函数体内，如果有些代码实际上负责的是一些重复性的工作，那么合理利用循环不仅可以 完成同样的功能，还可以使代码量更少。</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//bad case</span></span>
+<span data-line><span>var createXHR = function(){</span></span>
+<span data-line><span>  var xhr;</span></span>
+<span data-line><span>  try{</span></span>
+<span data-line><span>    xhr = new ActiveXObject( 'MSXML2.XMLHttp.6.0' );</span></span>
+<span data-line><span>  }catch(e){</span></span>
+<span data-line><span>    try{</span></span>
+<span data-line><span>      xhr = new ActiveXObject( 'MSXML2.XMLHttp.3.0' );</span></span>
+<span data-line><span>    }catch(e){</span></span>
+<span data-line><span>      xhr = new ActiveXObject( 'MSXML2.XMLHttp' );</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>  return xhr;</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>var xhr = createXHR();</span></span></code></pre></figure>
+<p>改成：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//good case</span></span>
+<span data-line><span>var createXHR = function(){</span></span>
+<span data-line><span>var versions= [ 'MSXML2.XMLHttp.6.0ddd', 'MSXML2.XMLHttp.3.0', 'MSXML2.XMLHttp' ];</span></span>
+<span data-line><span>for ( var i = 0, version; version = versions[ i++ ]; ){</span></span>
+<span data-line><span>  try{</span></span>
+<span data-line><span>   return new ActiveXObject( version );</span></span>
+<span data-line><span>  }catch(e){</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span> }</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<h3 id="提前让函数退出代替嵌套条件分支条件退出前置">提前让函数退出代替嵌套条件分支，条件退出前置<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#提前让函数退出代替嵌套条件分支条件退出前置" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>挑选一些条件分支，在进入这些条件分支之后，就立即让这个函数退出。避免过于复杂的嵌套条件分支语句。</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//bad case</span></span>
+<span data-line><span>var del = function( obj ){</span></span>
+<span data-line><span>  var ret;</span></span>
+<span data-line><span>  if ( !obj.isReadOnly ){ // 不为只读的才能被删除</span></span>
+<span data-line><span>      if ( obj.isFolder ){ // 如果是文件夹</span></span>
+<span data-line><span>          ret = deleteFolder( obj );</span></span>
+<span data-line><span>      }else if ( obj.isFile ){ // 如果是文件</span></span>
+<span data-line><span>          ret = deleteFile( obj );</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>  return ret;</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<p>改成：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//good case</span></span>
+<span data-line><span>var del = function( obj ){</span></span>
+<span data-line><span>  if ( obj.isReadOnly ){ // 反转if 表达式</span></span>
+<span data-line><span>    return;</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>  if ( obj.isFolder ){</span></span>
+<span data-line><span>    return deleteFolder( obj );</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>  if ( obj.isFile ){</span></span>
+<span data-line><span>    return deleteFile( obj );</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<h3 id="传递对象参数代替过长的参数列表">传递对象参数代替过长的<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8&amp;zhida_source=entity" class="external">参数列表<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#传递对象参数代替过长的参数列表" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>有时候一个函数有可能接收多个参数，而参数的数量越多，函数就越难理解和使用。我们可以把参数都放入一个对象内,需要的数据可以自行从该对象里获取,不用再关心参数的数量和顺序.</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//bad case</span></span>
+<span data-line><span>var setUserInfo = function( id, name, address, sex, mobile, qq ){</span></span>
+<span data-line><span>console.log( 'id= ' + id );</span></span>
+<span data-line><span>  console.log( 'name= ' +name );</span></span>
+<span data-line><span>  console.log( 'address= ' + address );</span></span>
+<span data-line><span>  console.log( 'sex= ' + sex );</span></span>
+<span data-line><span>  console.log( 'mobile= ' + mobile );</span></span>
+<span data-line><span>  console.log( 'qq= ' + qq );</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>setUserInfo( 1314, 'sven', 'shenzhen', 'male', '137********', 377876679 );</span></span></code></pre></figure>
+<p>改成：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//good case</span></span>
+<span data-line><span>var setUserInfo = function( obj ){</span></span>
+<span data-line><span>  console.log( 'id= ' + obj.id );</span></span>
+<span data-line><span>  console.log( 'name= ' + obj.name );</span></span>
+<span data-line><span>  console.log( 'address= ' + obj.address );</span></span>
+<span data-line><span>  console.log( 'sex= ' + obj.sex );</span></span>
+<span data-line><span>  console.log( 'mobile= ' + obj.mobile );</span></span>
+<span data-line><span>  console.log( 'qq= ' + obj.qq );</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>setUserInfo({</span></span>
+<span data-line><span>  id: 1314,</span></span>
+<span data-line><span>  name: 'sven',</span></span>
+<span data-line><span>  address: 'shenzhen',</span></span>
+<span data-line><span>  sex: 'male',</span></span>
+<span data-line><span>  mobile: '137********',</span></span>
+<span data-line><span>  qq: 377876679</span></span>
+<span data-line><span>});</span></span></code></pre></figure>
+<h3 id="尽量减少参数数量">尽量减少参数数量<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#尽量减少参数数量" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>如果调用一个函数时需要传入多个参数，那这个函数是让人望而生畏的，我们必须搞清楚这 些参数代表的含义，必须小心翼翼地把它们按照顺序传入该函数。实际开发中，向函数传递参数不可避免，但我们应该尽量减少函数接收的参数数量。</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//bad case</span></span>
+<span data-line><span>var draw = function( width, height, square ){};</span></span></code></pre></figure>
+<p>改成：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//good case</span></span>
+<span data-line><span>var draw = function( width, height ){</span></span>
+<span data-line><span>  var square = width * height;</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<h3 id="少用三目运算符">少用三目运算符<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#少用三目运算符" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>有一些程序员喜欢大规模地使用三目运算符，来代替传统的if、else。但是有些时候要保证代码可读性和<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7&amp;zhida_source=entity" class="external">可维护性<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>，尽量少用<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=3&amp;q=%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6&amp;zhida_source=entity" class="external">三目运算符<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>。</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//bad case</span></span>
+<span data-line><span>var global = typeof window !== &quot;undefined&quot; ? window : this;</span></span></code></pre></figure>
+<p>改成：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//good case</span></span>
+<span data-line><span>var global = null;</span></span>
+<span data-line><span>if (typeof window !== &quot;undefined&quot;) {</span></span>
+<span data-line><span>    global = window;</span></span>
+<span data-line><span>else{</span></span>
+<span data-line><span>    global = this;</span></span>
+<span data-line><span>}</span></span></code></pre></figure>
+<h3 id="合理使用链式调用">合理使用链式调用<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#合理使用链式调用" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>链式调用的方式并不会造成太多阅读上的困难，也能省下一些字符和中间变量。链式调用带来的坏处就是在调试的时候非常不方便，如果我们知道一条链中有错误出现，必须得先把这条链拆开才能加上一些调试log 或者增加断点，这样才能定位错误出现的地方。如果该链条的结构相对稳定，后期不易发生修改，那么使用链式调用无可厚非。但如果该链条很容易发生变化，导致调试和维护困难，那么还是建议使用普通调用的形式。</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//bad case</span></span>
+<span data-line><span>var User = {</span></span>
+<span data-line><span>  id: null,</span></span>
+<span data-line><span>  name: null,</span></span>
+<span data-line><span>  setId: function( id ){</span></span>
+<span data-line><span>    this.id = id;</span></span>
+<span data-line><span>    return this;</span></span>
+<span data-line><span>  },</span></span>
+<span data-line><span>  setName: function( name ){</span></span>
+<span data-line><span>    this.name = name;</span></span>
+<span data-line><span>    return this;</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>console.log( User.setId( 1314 ).setName( 'sven' ) );</span></span></code></pre></figure>
+<p>改成：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//good case</span></span>
+<span data-line><span>var user = new User();</span></span>
+<span data-line><span>user.setId( 1314 );</span></span>
+<span data-line><span>user.setName( 'sven' );</span></span></code></pre></figure>
+<h3 id="分解大型类">分解大型类<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#分解大型类" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>如果一个类的职责太大了，实际上它的职责完全有必要拆成多个的类存在，<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1&amp;zhida_source=entity" class="external">面向对象设计<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>鼓励将行为分布在合理数量的更小对象。</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//bad case</span></span>
+<span data-line><span>var Spirit = function( name ){</span></span>
+<span data-line><span>  this.name = name;</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>Spirit.prototype.attack = function( type ){ // 攻击</span></span>
+<span data-line><span>  if ( type === 'waveBoxing' ){</span></span>
+<span data-line><span>   console.log( this.name + ': 使用波动拳' );</span></span>
+<span data-line><span>  }else if( type === 'whirlKick' ){</span></span>
+<span data-line><span>    console.log( this.name + ': 使用旋风腿' );</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>var spirit = new Spirit( 'RYU' );</span></span>
+<span data-line><span>spirit.attack( 'waveBoxing' ); // 输出：RYU: 使用波动拳</span></span>
+<span data-line><span>spirit.attack( 'whirlKick' ); // 输出：RYU: 使用旋风腿</span></span></code></pre></figure>
+<p>改为：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//good case</span></span>
+<span data-line><span>var Attack = function( spirit ){</span></span>
+<span data-line><span>  this.spirit = spirit;</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>Attack.prototype.start = function( type ){</span></span>
+<span data-line><span>  return this.list[ type ].call( this );</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>Attack.prototype.list = {</span></span>
+<span data-line><span>  waveBoxing: function(){</span></span>
+<span data-line><span>    console.log( this.spirit.name + ': 使用波动拳' );</span></span>
+<span data-line><span>  },</span></span>
+<span data-line><span>  whirlKick: function(){</span></span>
+<span data-line><span>    console.log( this.spirit.name + ': 使用旋风腿' );</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>};</span></span>
+<span data-line> </span>
+<span data-line><span>var Spirit = function( name ){</span></span>
+<span data-line><span>  this.name = name;</span></span>
+<span data-line><span>  this.attackObj = new Attack( this );</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>Spirit.prototype.attack = function( type ){ // 攻击</span></span>
+<span data-line><span>  this.attackObj.start( type );</span></span>
+<span data-line><span>};</span></span>
+<span data-line><span>var spirit = new Spirit( 'RYU' );</span></span>
+<span data-line><span>spirit.attack( 'waveBoxing' ); // 输出：RYU: 使用波动拳</span></span>
+<span data-line><span>spirit.attack( 'whirlKick' ); // 输出：RYU: 使用旋风腿</span></span></code></pre></figure>
+<h3 id="用return-退出多重循环">用return 退出多重循环<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#用return-退出多重循环" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>假设在函数体内有一个两重循环语句，我们需要在内层循环中判断，当达到某个<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=1&amp;q=%E4%B8%B4%E7%95%8C%E6%9D%A1%E4%BB%B6&amp;zhida_source=entity" class="external">临界条件<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>时 退出外层的循环。我们大多数时候会引入一个控制标记变量,但这做法无疑都让人头晕目眩，更简单的做法是在需要中止循环的时候直接退出整个方法。</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//bad case</span></span>
+<span data-line><span>var func = function(){</span></span>
+<span data-line><span>var flag = false;</span></span>
+<span data-line><span>for ( var i = 0; i &lt; 10; i++ ){</span></span>
+<span data-line><span>  for ( var j = 0; j &lt; 10; j++ ){</span></span>
+<span data-line><span>      if ( i * j >30 ){</span></span>
+<span data-line><span>        flag = true;</span></span>
+<span data-line><span>        break;</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>    if ( flag === true ){</span></span>
+<span data-line><span>      break;</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<p>改成：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="text" data-theme="github-light github-dark"><code data-language="text" data-theme="github-light github-dark" style="display:grid;"><span data-line><span>//good case</span></span>
+<span data-line><span>var func = function(){</span></span>
+<span data-line><span>  for ( var i = 0; i &lt; 10; i++ ){</span></span>
+<span data-line><span>    for ( var j = 0; j &lt; 10; j++ ){</span></span>
+<span data-line><span>      if ( i * j >30 ){</span></span>
+<span data-line><span>        return;</span></span>
+<span data-line><span>      }</span></span>
+<span data-line><span>    }</span></span>
+<span data-line><span>  }</span></span>
+<span data-line><span>};</span></span></code></pre></figure>
+<h3 id="总结">总结<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#总结" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>很早些年其实看了不少次《<a href="https://zhida.zhihu.com/search?content_id=190323990&amp;content_type=Article&amp;match_order=15&amp;q=%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F&amp;zhida_source=entity" class="external">设计模式<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>》系列的书籍，但是以前项目经验太少，也因为代码写的少，对代码设计这块其实领悟得不够多。如今做了一段时间后回顾这块内容的时候，对自己在代码设计以及重构方面还是有了很大的帮助。后续还是要怀抱着对代码的敬畏之心，好好写好自己的代码。</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-5" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#背景" data-for="背景">背景</a></li><li class="depth-0"><a href="#设计模式" data-for="设计模式">设计模式</a></li><li class="depth-0"><a href="#常见的设计模式" data-for="常见的设计模式">常见的设计模式</a></li><li class="depth-0"><a href="#创建型模式" data-for="创建型模式">创建型模式</a></li><li class="depth-0"><a href="#单例模式模式" data-for="单例模式模式">单例模式模式</a></li><li class="depth-0"><a href="#简单工厂模式" data-for="简单工厂模式">简单工厂模式</a></li><li class="depth-0"><a href="#工厂方法模式" data-for="工厂方法模式">工厂方法模式</a></li><li class="depth-0"><a href="#抽象工厂模式" data-for="抽象工厂模式">抽象工厂模式</a></li><li class="depth-0"><a href="#构建器模式" data-for="构建器模式">构建器模式</a></li><li class="depth-0"><a href="#原型模式" data-for="原型模式">原型模式</a></li><li class="depth-0"><a href="#结构型模式" data-for="结构型模式">结构型模式</a></li><li class="depth-0"><a href="#代理模式" data-for="代理模式">代理模式</a></li><li class="depth-0"><a href="#组合模式" data-for="组合模式">组合模式</a></li><li class="depth-0"><a href="#适配器模式" data-for="适配器模式">适配器模式</a></li><li class="depth-0"><a href="#外观模式" data-for="外观模式">外观模式</a></li><li class="depth-0"><a href="#装饰器模式" data-for="装饰器模式">装饰器模式</a></li><li class="depth-0"><a href="#桥接模式" data-for="桥接模式">桥接模式</a></li><li class="depth-0"><a href="#享元模式" data-for="享元模式">享元模式</a></li><li class="depth-0"><a href="#行为型模式" data-for="行为型模式">行为型模式</a></li><li class="depth-0"><a href="#策略模式" data-for="策略模式">策略模式</a></li><li class="depth-0"><a href="#迭代器模式" data-for="迭代器模式">迭代器模式</a></li><li class="depth-0"><a href="#观察者模式" data-for="观察者模式">观察者模式</a></li><li class="depth-0"><a href="#命令模式" data-for="命令模式">命令模式</a></li><li class="depth-0"><a href="#模版方法模式" data-for="模版方法模式">模版方法模式</a></li><li class="depth-0"><a href="#责任链模式" data-for="责任链模式">责任链模式</a></li><li class="depth-0"><a href="#中介者模式" data-for="中介者模式">中介者模式</a></li><li class="depth-0"><a href="#状态模式" data-for="状态模式">状态模式</a></li><li class="depth-0"><a href="#访问者模式" data-for="访问者模式">访问者模式</a></li><li class="depth-0"><a href="#解释器模式" data-for="解释器模式">解释器模式</a></li><li class="depth-0"><a href="#备案录模式" data-for="备案录模式">备案录模式</a></li><li class="depth-0"><a href="#思考总结" data-for="思考总结">思考总结</a></li><li class="depth-0"><a href="#设计模式中相似模式的一些思考" data-for="设计模式中相似模式的一些思考">设计模式中相似模式的一些思考</a></li><li class="depth-0"><a href="#中介者模式和观察者模式" data-for="中介者模式和观察者模式">中介者模式和观察者模式</a></li><li class="depth-0"><a href="#代理模式和装饰器模式" data-for="代理模式和装饰器模式">代理模式和装饰器模式</a></li><li class="depth-0"><a href="#状态模式和策略模式" data-for="状态模式和策略模式">状态模式和策略模式</a></li><li class="depth-0"><a href="#重构技巧" data-for="重构技巧">重构技巧</a></li><li class="depth-0"><a href="#提炼函数" data-for="提炼函数">提炼函数</a></li><li class="depth-0"><a href="#合并重复条件片段" data-for="合并重复条件片段">合并重复条件片段</a></li><li class="depth-0"><a href="#把条件分支语句提炼出函数" data-for="把条件分支语句提炼出函数">把条件分支语句提炼出函数</a></li><li class="depth-0"><a href="#合理使用循环" data-for="合理使用循环">合理使用循环</a></li><li class="depth-0"><a href="#提前让函数退出代替嵌套条件分支条件退出前置" data-for="提前让函数退出代替嵌套条件分支条件退出前置">提前让函数退出代替嵌套条件分支，条件退出前置</a></li><li class="depth-0"><a href="#传递对象参数代替过长的参数列表" data-for="传递对象参数代替过长的参数列表">传递对象参数代替过长的参数列表</a></li><li class="depth-0"><a href="#尽量减少参数数量" data-for="尽量减少参数数量">尽量减少参数数量</a></li><li class="depth-0"><a href="#少用三目运算符" data-for="少用三目运算符">少用三目运算符</a></li><li class="depth-0"><a href="#合理使用链式调用" data-for="合理使用链式调用">合理使用链式调用</a></li><li class="depth-0"><a href="#分解大型类" data-for="分解大型类">分解大型类</a></li><li class="depth-0"><a href="#用return-退出多重循环" data-for="用return-退出多重循环">用return 退出多重循环</a></li><li class="depth-0"><a href="#总结" data-for="总结">总结</a></li><li class="overflow-end"></li></ul></div><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div></div><footer class><p>© 2026 UknowZheng</p><ul><li><a href="https://github.com/uknowzheng">GitHub</a></li></ul></footer></div></div></body><script type="application/javascript" data-persist="true">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module" data-persist="true">function E(a,e){if(!a)return;function t(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function n(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}a?.addEventListener("click",t),window.addCleanup(()=>a?.removeEventListener("click",t)),document.addEventListener("keydown",n),window.addCleanup(()=>document.removeEventListener("keydown",n))}function f(a){for(;a.firstChild;)a.removeChild(a.firstChild)}var m=class{constructor(e,t){this.container=e;this.content=t;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}container;content;isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),t=this.onMouseMove.bind(this),n=this.onMouseUp.bind(this),o=this.onTouchStart.bind(this),r=this.onTouchMove.bind(this),i=this.onTouchEnd.bind(this),s=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",t),document.addEventListener("mouseup",n),this.container.addEventListener("touchstart",o,{passive:!1}),document.addEventListener("touchmove",r,{passive:!1}),document.addEventListener("touchend",i),window.addEventListener("resize",s),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",t),()=>document.removeEventListener("mouseup",n),()=>this.container.removeEventListener("touchstart",o),()=>document.removeEventListener("touchmove",r),()=>document.removeEventListener("touchend",i),()=>window.removeEventListener("resize",s))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let t=this.createButton("+",()=>this.zoom(.1)),n=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(n),e.appendChild(o),e.appendChild(t),this.container.appendChild(e)}createButton(e,t){let n=document.createElement("button");return n.textContent=e,n.className="mermaid-control-button",n.addEventListener("click",t),window.addCleanup(()=>n.removeEventListener("click",t)),n}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}onTouchStart(e){if(e.touches.length!==1)return;this.isDragging=!0;let t=e.touches[0];this.startPan={x:t.clientX-this.currentPan.x,y:t.clientY-this.currentPan.y}}onTouchMove(e){if(!this.isDragging||e.touches.length!==1)return;e.preventDefault();let t=e.touches[0];this.currentPan={x:t.clientX-this.startPan.x,y:t.clientY-this.startPan.y},this.updateTransform()}onTouchEnd(){this.isDragging=!1}zoom(e){let t=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),n=this.content.getBoundingClientRect(),o=n.width/2,r=n.height/2,i=t-this.scale;this.currentPan.x-=o*i,this.currentPan.y-=r*i,this.scale=t,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){let t=this.content.querySelector("svg").getBoundingClientRect(),n=t.width/this.scale,o=t.height/this.scale;this.scale=1,this.currentPan={x:(this.container.clientWidth-n)/2,y:(this.container.clientHeight-o)/2},this.updateTransform()}},T=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],y;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;y||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let t=y.default,n=new WeakMap;for(let r of e)n.set(r,r.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let c=n.get(s);c&&(s.innerHTML=c)}let r=T.reduce((s,c)=>(s[c]=window.getComputedStyle(document.documentElement).getPropertyValue(c),s),{}),i=document.documentElement.getAttribute("saved-theme")==="dark";t.initialize({startOnLoad:!1,securityLevel:"loose",theme:i?"dark":"base",themeVariables:{fontFamily:r["--codeFont"],primaryColor:r["--light"],primaryTextColor:r["--darkgray"],primaryBorderColor:r["--tertiary"],lineColor:r["--darkgray"],secondaryColor:r["--secondary"],tertiaryColor:r["--tertiary"],clusterBkg:r["--light"],edgeLabelBackground:r["--highlight"]}}),await t.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let r=0;r<e.length;r++){let v=function(){let g=l.querySelector("#mermaid-space"),h=l.querySelector(".mermaid-content");if(!h)return;f(h);let w=i.querySelector("svg").cloneNode(!0);h.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new m(g,h)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},i=e[r],s=i.parentElement,c=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(c),L=c.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),E(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../postscript.js" type="module" data-persist="true"></script></html>
